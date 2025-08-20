@@ -1,7 +1,6 @@
-import { LoginPage } from "@/components/LoginPage";
-
+// This file is no longer used as authentication is handled in App.tsx
 const Index = () => {
-  return <LoginPage />;
+  return <div>Redirecting...</div>;
 };
 
 export default Index;

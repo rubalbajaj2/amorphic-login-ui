@@ -6,12 +6,23 @@ import { Label } from "@/components/ui/label";
 import { AmorphicLogo } from "./AmorphicLogo";
 import { AnalyticsIllustration } from "./AnalyticsIllustration";
 
-export const LoginPage = () => {
+interface LoginPageProps {
+  onLogin: (email: string, password: string) => boolean;
+}
+
+export const LoginPage = ({ onLogin }: LoginPageProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const isFormValid = email.trim() !== "" && password.trim() !== "";
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isFormValid) {
+      onLogin(email, password);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
@@ -51,7 +62,7 @@ export const LoginPage = () => {
               </div>
 
               {/* Form */}
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 {/* Email Field */}
                 <div>
                   <Label htmlFor="email" className="text-sm font-medium text-foreground">
