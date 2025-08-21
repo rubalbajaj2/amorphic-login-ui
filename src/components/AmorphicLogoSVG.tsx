@@ -14,7 +14,7 @@ export const AmorphicLogoSVG = ({ className = "h-8" }: { className?: string }) =
           fill="rgb(var(--primary-500))" 
         />
       </svg>
-      <span className="text-xl font-semibold" style={{ color: 'rgb(var(--primary-500))' }}>
+      <span className="text-xl font-semibold text-primary">
         Amorphic
       </span>
     </div>
