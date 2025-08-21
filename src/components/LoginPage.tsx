@@ -47,8 +47,11 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
           {/* Right Panel - Login Form */}
           <div className="flex-1 bg-card p-12 md:p-16 rounded-r-2xl">
             <div className="max-w-md mx-auto">
-              {/* Empty header space */}
-              <div className="mb-8"></div>
+              {/* Version & Logo */}
+              <div className="flex justify-between items-start mb-8">
+                <AmorphicLogo />
+                <span className="text-xs text-muted-foreground">Sandbox - v3.0.3</span>
+              </div>
 
               {/* Login Title */}
               <div className="mb-8">
