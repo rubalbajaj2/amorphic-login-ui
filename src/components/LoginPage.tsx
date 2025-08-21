@@ -56,14 +56,29 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
           </div>
 
           {/* Right Panel - Login Form */}
-          <div className="flex-1 bg-card p-12 md:p-16 rounded-r-2xl">
+          <div className="flex-1 bg-card p-12 md:p-16 rounded-r-2xl relative">
+            {/* AWS Logo - Top Right */}
+            <div className="absolute top-6 right-6">
+              <img src="/src/assets/aws-logo.svg" alt="AWS" className="h-8 w-auto" />
+            </div>
+            
             <div className="max-w-md mx-auto">
               {/* Empty header space */}
               <div className="mb-8"></div>
 
               {/* Login Title */}
               <div className="mb-8">
-                <AmorphicLogoSVG className="mb-4" />
+                <div className="mb-6">
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl font-semibold text-primary" style={{ fontFamily: 'Inter, system-ui, -apple-system, sans-serif' }}>
+                      Cloudwick
+                    </span>
+                    <span className="text-2xl font-light text-muted-foreground">|</span>
+                    <span className="text-2xl font-semibold text-primary" style={{ fontFamily: 'Inter, system-ui, -apple-system, sans-serif' }}>
+                      Amorphic
+                    </span>
+                  </div>
+                </div>
                 <h2 className="text-heading-md font-semibold text-foreground">Login</h2>
                 <p className="text-base text-muted-foreground mt-2">
                   Get Started with Amorphic – Manage Your Data in One Place
