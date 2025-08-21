@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChevronDown, Search, Info, Bell, LogOut } from "lucide-react";
 import { AmorphicLogo } from "../AmorphicLogo";
+import { AmorphicLogoSVG } from "../AmorphicLogoSVG";
 import { DiscoverMenu } from "./DiscoverMenu";
 import { ExploreMenu } from "./ExploreMenu";
 import { ManageMenu } from "./ManageMenu";
@@ -29,9 +30,7 @@ export const AppHeader = ({ onLogout }: AppHeaderProps) => {
       <header className="w-full bg-card px-6 py-3 border-b border-border flex items-center justify-between">
         {/* Left Section - Navigation */}
         <div className="flex items-center gap-6">
-          <h1 className="text-heading-md font-bold text-primary-500" style={{ fontFamily: 'Inter, system-ui, -apple-system, sans-serif' }}>
-            Amorphic
-          </h1>
+          <AmorphicLogoSVG className="h-6" />
           
           <nav className="flex items-center gap-4">
             <button

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AmorphicLogo } from "./AmorphicLogo";
+import { AmorphicLogoSVG } from "./AmorphicLogoSVG";
 import { AnalyticsIllustration } from "./AnalyticsIllustration";
 
 interface LoginPageProps {
@@ -28,13 +29,12 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <div className="w-full max-w-6xl bg-card shadow-xl rounded-2xl overflow-hidden relative">
         {/* Top branding bar */}
-        <div className="absolute top-0 left-0 right-0 bg-primary-500 px-6 py-2 flex justify-between items-center text-primary-foreground z-10">
+        <div className="absolute top-0 left-0 w-1/2 bg-primary-500 px-6 py-2 flex justify-between items-center text-primary-foreground z-10">
           <div className="text-sm font-medium text-white">
             Cloudwick
           </div>
           <div className="flex items-center gap-2">
             <img src="/src/assets/aws-logo.svg" alt="AWS" className="h-5 w-auto brightness-0 invert" />
-            <span className="text-sm font-medium text-white">AWS</span>
           </div>
         </div>
         
@@ -63,9 +63,7 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
 
               {/* Login Title */}
               <div className="mb-8">
-                <h1 className="text-heading-md font-bold text-primary-500 mb-4" style={{ fontFamily: 'Inter, system-ui, -apple-system, sans-serif' }}>
-                  Amorphic
-                </h1>
+                <AmorphicLogoSVG className="mb-4" />
                 <h2 className="text-heading-md font-semibold text-foreground">Login</h2>
                 <p className="text-base text-muted-foreground mt-2">
                   Get Started with Amorphic – Manage Your Data in One Place
