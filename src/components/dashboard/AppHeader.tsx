@@ -29,7 +29,6 @@ export const AppHeader = ({ onLogout }: AppHeaderProps) => {
       <header className="w-full bg-card px-6 py-3 border-b border-border flex items-center justify-between">
         {/* Left Section - Navigation */}
         <div className="flex items-center gap-6">
-          <AmorphicLogo />
           
           <nav className="flex items-center gap-4">
             <button
@@ -76,10 +75,10 @@ export const AppHeader = ({ onLogout }: AppHeaderProps) => {
             <DropdownMenuTrigger asChild>
               <button className="flex items-center gap-2 text-foreground hover:text-primary transition-colors">
                 <div className="w-8 h-8 bg-primary/20 text-primary rounded-full flex items-center justify-center text-sm font-medium">
-                  H
+                  A
                 </div>
                 <div className="text-left">
-                  <div className="text-sm font-medium">Harsha</div>
+                  <div className="text-sm font-medium">Admin</div>
                   <div className="text-xs text-muted-foreground">SystemRole-SystemAdministrators</div>
                 </div>
                 <ChevronDown size={16} />
