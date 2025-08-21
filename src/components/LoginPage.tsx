@@ -26,8 +26,19 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <div className="w-full max-w-6xl bg-card shadow-xl rounded-2xl overflow-hidden">
-        <div className="flex flex-col md:flex-row min-h-[600px]">
+      <div className="w-full max-w-6xl bg-card shadow-xl rounded-2xl overflow-hidden relative">
+        {/* Top branding bar */}
+        <div className="absolute top-0 left-0 right-0 bg-primary-500 px-6 py-2 flex justify-between items-center text-primary-foreground z-10">
+          <div className="text-sm font-medium text-white">
+            Cloudwick
+          </div>
+          <div className="flex items-center gap-2">
+            <img src="/src/assets/aws-logo.svg" alt="AWS" className="h-5 w-auto brightness-0 invert" />
+            <span className="text-sm font-medium text-white">AWS</span>
+          </div>
+        </div>
+        
+        <div className="flex flex-col md:flex-row min-h-[600px] pt-10">
           {/* Left Panel - Brand & Illustration */}
           <div className="flex-1 bg-primary-500 p-12 md:p-16 flex flex-col justify-center rounded-l-2xl">
             <div className="text-center md:text-left">
@@ -52,6 +63,9 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
 
               {/* Login Title */}
               <div className="mb-8">
+                <h1 className="text-heading-md font-bold text-primary-500 mb-4" style={{ fontFamily: 'Inter, system-ui, -apple-system, sans-serif' }}>
+                  Amorphic
+                </h1>
                 <h2 className="text-heading-md font-semibold text-foreground">Login</h2>
                 <p className="text-base text-muted-foreground mt-2">
                   Get Started with Amorphic – Manage Your Data in One Place
