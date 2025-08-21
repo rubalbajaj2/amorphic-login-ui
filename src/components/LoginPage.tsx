@@ -50,7 +50,7 @@ export const LoginPage = ({ onLogin }: LoginPageProps) => {
           <div className="flex-1 bg-card p-12 md:p-16 rounded-r-2xl relative">
             {/* AWS Logo - Top Right */}
             <div className="absolute top-6 right-6">
-              <img src="/src/assets/aws-logo.svg" alt="AWS" className="h-8 w-auto" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" alt="AWS" className="h-8 w-auto" />
             </div>
             
             <div className="max-w-md mx-auto">
