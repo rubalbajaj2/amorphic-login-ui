@@ -1,4 +1,4 @@
-import { X } from "lucide-react";
+import { X, Database, Cloud, FolderOpen, Link, Mail, CloudSnow, Waves, Circle, CircleDot, Server, Building, BarChart3, Sunrise, Coffee, Mountain } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface CreateDatasourceModalProps {
@@ -11,22 +11,22 @@ export const CreateDatasourceModal = ({ isOpen, onClose, onS3Select }: CreateDat
   if (!isOpen) return null;
 
   const datasourceTypes = [
-    { name: "Amorphic", icon: "🔷" },
-    { name: "Bedrock", icon: "🪨" },
-    { name: "S3", icon: "🪣", onClick: onS3Select },
-    { name: "External API", icon: "🔗" },
-    { name: "Email", icon: "📧" },
-    { name: "SaaS", icon: "☁️" },
-    { name: "Stream", icon: "🌊" },
-    { name: "Oracle", icon: "🔴" },
-    { name: "MySQL", icon: "🐬" },
-    { name: "PostgreSQL", icon: "🐘" },
-    { name: "Microsoft SQL Server", icon: "🏢" },
-    { name: "IBM DB2(LUW)", icon: "🔵" },
-    { name: "Amazon Redshift", icon: "📊" },
-    { name: "Amazon Aurora", icon: "🌅" },
-    { name: "JDBC", icon: "☕" },
-    { name: "Aurora MySQL", icon: "🌄" }
+    { name: "Amorphic", icon: Database, onClick: undefined },
+    { name: "Bedrock", icon: Mountain, onClick: undefined },
+    { name: "S3", icon: FolderOpen, onClick: onS3Select },
+    { name: "External API", icon: Link, onClick: undefined },
+    { name: "Email", icon: Mail, onClick: undefined },
+    { name: "SaaS", icon: Cloud, onClick: undefined },
+    { name: "Stream", icon: Waves, onClick: undefined },
+    { name: "Oracle", icon: Circle, onClick: undefined },
+    { name: "MySQL", icon: CircleDot, onClick: undefined },
+    { name: "PostgreSQL", icon: Server, onClick: undefined },
+    { name: "Microsoft SQL Server", icon: Building, onClick: undefined },
+    { name: "IBM DB2(LUW)", icon: Database, onClick: undefined },
+    { name: "Amazon Redshift", icon: BarChart3, onClick: undefined },
+    { name: "Amazon Aurora", icon: Sunrise, onClick: undefined },
+    { name: "JDBC", icon: Coffee, onClick: undefined },
+    { name: "Aurora MySQL", icon: Mountain, onClick: undefined }
   ];
 
   return (
@@ -48,16 +48,19 @@ export const CreateDatasourceModal = ({ isOpen, onClose, onS3Select }: CreateDat
 
         {/* Datasource Options Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {datasourceTypes.map((type, index) => (
-            <button
-              key={index}
-              onClick={type.onClick || (() => {})}
-              className="border border-border rounded-lg p-6 flex flex-col items-center justify-center gap-4 text-center hover:shadow-md hover:border-primary transition-all"
-            >
-              <div className="text-3xl">{type.icon}</div>
-              <span className="font-medium text-foreground text-sm">{type.name}</span>
-            </button>
-          ))}
+          {datasourceTypes.map((type, index) => {
+            const IconComponent = type.icon;
+            return (
+              <button
+                key={index}
+                onClick={type.onClick || (() => {})}
+                className="border border-border rounded-lg p-6 flex flex-col items-center justify-center gap-4 text-center hover:shadow-md hover:border-primary transition-all"
+              >
+                <IconComponent size={32} className="text-primary" />
+                <span className="font-medium text-foreground text-sm">{type.name}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
     </div>
