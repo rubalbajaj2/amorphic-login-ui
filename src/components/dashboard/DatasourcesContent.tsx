@@ -193,6 +193,10 @@ export const DatasourcesContent = () => {
       <S3ConfigSideSheet
         isOpen={showS3Config}
         onClose={() => setShowS3Config(false)}
+        onBack={() => {
+          setShowS3Config(false);
+          setShowCreateModal(true);
+        }}
       />
     </>
   );

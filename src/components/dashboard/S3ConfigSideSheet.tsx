@@ -8,6 +8,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 interface S3ConfigSideSheetProps {
   isOpen: boolean;
   onClose: () => void;
+  onBack: () => void;
 }
 
 interface FormData {
@@ -23,7 +24,7 @@ interface FormErrors {
   [key: string]: string;
 }
 
-export const S3ConfigSideSheet = ({ isOpen, onClose }: S3ConfigSideSheetProps) => {
+export const S3ConfigSideSheet = ({ isOpen, onClose, onBack }: S3ConfigSideSheetProps) => {
   const [formData, setFormData] = useState<FormData>({
     datasourceName: "",
     selectVersion: "2.5",
@@ -228,7 +229,7 @@ export const S3ConfigSideSheet = ({ isOpen, onClose }: S3ConfigSideSheetProps) =
 
         {/* Footer */}
         <div className="flex justify-end gap-2 pt-6 border-t">
-          <Button variant="outline" onClick={onClose}>
+          <Button variant="outline" onClick={onBack}>
             Cancel
           </Button>
           <Button onClick={handleCreate}>
