@@ -33,6 +33,9 @@ export const AppHeader = ({ onLogout }: AppHeaderProps) => {
           <AmorphicLogoSVG className="h-6" />
           
           <nav className="flex items-center gap-4">
+            <button className="font-medium text-foreground hover:text-primary transition-colors">
+              Home
+            </button>
             <button
               onClick={() => toggleMenu('discover')}
               className="flex items-center gap-1 font-medium text-foreground hover:text-primary transition-colors"
