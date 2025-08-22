@@ -80,12 +80,12 @@ export const S3ConfigSideSheet = ({ isOpen, onClose }: S3ConfigSideSheetProps) =
   };
 
   return (
-    <div className="fixed inset-0 z-50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
       
-      {/* Side Sheet */}
-      <div className="absolute right-0 top-0 h-full w-96 bg-card shadow-xl p-6 flex flex-col animate-slide-in-right">
+      {/* Pop-up Modal */}
+      <div className="relative bg-card rounded-lg shadow-xl p-6 max-w-md w-full mx-4 max-h-[90vh] flex flex-col animate-scale-in">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
