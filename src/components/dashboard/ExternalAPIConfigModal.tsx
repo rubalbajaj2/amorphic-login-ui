@@ -1,4 +1,4 @@
-import { X, Plus } from "lucide-react";
+import { X, Plus, Link, AlertTriangle } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,10 +25,7 @@ interface FormData {
 }
 
 interface FormErrors {
-  version?: string;
-  apiEndpoint?: string;
-  authentication?: string;
-  method?: string;
+  [key: string]: string;
 }
 
 export const ExternalAPIConfigModal = ({ isOpen, onClose, onBack }: ExternalAPIConfigModalProps) => {
@@ -44,10 +41,13 @@ export const ExternalAPIConfigModal = ({ isOpen, onClose, onBack }: ExternalAPIC
 
   if (!isOpen) return null;
 
-  const handleInputChange = (field: keyof FormData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    if (errors[field as keyof FormErrors]) {
-      setErrors(prev => ({ ...prev, [field]: undefined }));
+  const handleInputChange = (field: string, value: string) => {
+    if (field === 'version' || field === 'apiEndpoint' || field === 'authentication' || field === 'method') {
+      setFormData(prev => ({ ...prev, [field]: value }));
+    }
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: "" }));
     }
   };
 
@@ -75,15 +75,15 @@ export const ExternalAPIConfigModal = ({ isOpen, onClose, onBack }: ExternalAPIC
     const newErrors: FormErrors = {};
 
     if (!formData.apiEndpoint.trim()) {
-      newErrors.apiEndpoint = "API Endpoint is required";
+      newErrors.apiEndpoint = "Please enter the API Endpoint";
     }
 
     if (!formData.authentication) {
-      newErrors.authentication = "API Authentication is required";
+      newErrors.authentication = "Please select API Authentication";
     }
 
     if (!formData.method) {
-      newErrors.method = "Method is required";
+      newErrors.method = "Please select Method";
     }
 
     setErrors(newErrors);
@@ -97,15 +97,15 @@ export const ExternalAPIConfigModal = ({ isOpen, onClose, onBack }: ExternalAPIC
     }
   };
 
-  const getInputClassName = (hasError: boolean) => {
-    return hasError 
-      ? "border-error-500 focus-visible:ring-error-500" 
-      : "border-input focus-visible:ring-ring";
+  const getInputClassName = (field: string) => {
+    return errors[field] 
+      ? "border-destructive focus:border-destructive focus:ring-destructive" 
+      : "";
   };
 
-  const getSelectClassName = (hasError: boolean) => {
-    return hasError 
-      ? "border-error-500 focus:ring-error-500" 
+  const getSelectClassName = (field: string) => {
+    return errors[field] 
+      ? "border-destructive focus:border-destructive focus:ring-destructive" 
       : "";
   };
 
@@ -115,184 +115,181 @@ export const ExternalAPIConfigModal = ({ isOpen, onClose, onBack }: ExternalAPIC
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
       
       {/* Modal Container */}
-      <div className="relative bg-card rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto animate-scale-in">
+      <div className="relative bg-card rounded-lg shadow-xl p-6 max-w-md w-full mx-4 max-h-[90vh] flex flex-col animate-scale-in">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-border">
-          <div>
-            <h2 className="text-heading-md font-semibold text-foreground">
-              Add New Datasource
-            </h2>
-            <p className="text-sm text-muted-foreground mt-1">
-              Setup a new datasource for efficient data flow
-            </p>
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <Link size={20} className="text-primary" />
+              <Plus size={12} className="text-primary" />
+            </div>
+            <div>
+              <h2 className="font-semibold text-foreground">Add New Datasource</h2>
+              <p className="text-sm text-muted-foreground">Setup a new datasource for efficient data flow</p>
+            </div>
           </div>
           <Button variant="ghost" size="icon" onClick={onClose}>
             <X size={20} />
           </Button>
         </div>
 
-        {/* Form Content */}
-        <div className="p-6 space-y-6">
-          <div>
-            <h3 className="text-lg font-semibold text-foreground mb-2">
-              External API Configuration details
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              Configure the datasource
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            {/* Select Version */}
-            <div className="space-y-2">
-              <Label htmlFor="version" className="text-sm font-medium text-foreground">
-                Select Version
-              </Label>
-              <Select value={formData.version} onValueChange={(value) => handleInputChange("version", value)}>
-                <SelectTrigger className={getSelectClassName(!!errors.version)}>
-                  <SelectValue placeholder="Select version" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1.6">1.6</SelectItem>
-                  <SelectItem value="1.5">1.5</SelectItem>
-                  <SelectItem value="1.4">1.4</SelectItem>
-                </SelectContent>
-              </Select>
-              {errors.version && (
-                <p className="text-xs text-error-500">{errors.version}</p>
-              )}
+        {/* Form */}
+        <div className="flex-1 overflow-y-auto">
+          <div className="space-y-6">
+            {/* Section Title */}
+            <div>
+              <h3 className="font-medium text-foreground mb-1">External API Configuration details</h3>
+              <p className="text-sm text-muted-foreground">Configure the datasource</p>
             </div>
 
-            {/* API Endpoint */}
-            <div className="space-y-2">
-              <Label htmlFor="apiEndpoint" className="text-sm font-medium text-foreground">
-                API Endpoint
-              </Label>
-              <Input
-                id="apiEndpoint"
-                type="text"
-                value={formData.apiEndpoint}
-                onChange={(e) => handleInputChange("apiEndpoint", e.target.value)}
-                className={getInputClassName(!!errors.apiEndpoint)}
-                placeholder="Enter API endpoint URL"
-              />
-              {errors.apiEndpoint && (
-                <p className="text-xs text-error-500">{errors.apiEndpoint}</p>
-              )}
-            </div>
-
-            {/* API Authentication */}
-            <div className="space-y-2">
-              <Label htmlFor="authentication" className="text-sm font-medium text-foreground">
-                API Authentication
-              </Label>
-              <Select value={formData.authentication} onValueChange={(value) => handleInputChange("authentication", value)}>
-                <SelectTrigger className={getSelectClassName(!!errors.authentication)}>
-                  <SelectValue placeholder="Select..." />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="api-key">API Key</SelectItem>
-                  <SelectItem value="bearer-token">Bearer Token</SelectItem>
-                  <SelectItem value="basic-auth">Basic Authentication</SelectItem>
-                  <SelectItem value="oauth">OAuth</SelectItem>
-                  <SelectItem value="none">None</SelectItem>
-                </SelectContent>
-              </Select>
-              {errors.authentication && (
-                <p className="text-xs text-error-500">{errors.authentication}</p>
-              )}
-            </div>
-
-            {/* Method */}
-            <div className="space-y-2">
-              <Label htmlFor="method" className="text-sm font-medium text-foreground">
-                Method
-              </Label>
-              <Select value={formData.method} onValueChange={(value) => handleInputChange("method", value)}>
-                <SelectTrigger className={getSelectClassName(!!errors.method)}>
-                  <SelectValue placeholder="Select..." />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="GET">GET</SelectItem>
-                  <SelectItem value="POST">POST</SelectItem>
-                  <SelectItem value="PUT">PUT</SelectItem>
-                  <SelectItem value="DELETE">DELETE</SelectItem>
-                  <SelectItem value="PATCH">PATCH</SelectItem>
-                </SelectContent>
-              </Select>
-              {errors.method && (
-                <p className="text-xs text-error-500">{errors.method}</p>
-              )}
-            </div>
-
-            {/* Query Parameters Section */}
+            {/* Form Fields */}
             <div className="space-y-4">
+              {/* Select Version */}
               <div>
-                <h4 className="text-base font-semibold text-foreground">Add Query Parameters</h4>
-                <p className="text-sm text-muted-foreground">
-                  Query params are used when running data injection job
-                </p>
+                <Label htmlFor="version" className="text-sm font-medium text-foreground">
+                  Select Version
+                </Label>
+                <Select value={formData.version} onValueChange={(value) => handleInputChange("version", value)}>
+                  <SelectTrigger className={getSelectClassName("version")}>
+                    <SelectValue placeholder="Select version" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="1.6">1.6</SelectItem>
+                    <SelectItem value="1.5">1.5</SelectItem>
+                    <SelectItem value="1.4">1.4</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
-              {formData.queryParameters.map((param, index) => (
-                <div key={index} className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor={`key-${index}`} className="text-sm font-medium text-foreground">
-                      Key
-                    </Label>
-                    <Input
-                      id={`key-${index}`}
-                      type="text"
-                      value={param.key}
-                      onChange={(e) => handleQueryParameterChange(index, 'key', e.target.value)}
-                      className="border-input focus-visible:ring-ring"
-                      placeholder="Enter key"
-                    />
+              {/* API Endpoint */}
+              <div>
+                <Label htmlFor="apiEndpoint">API Endpoint</Label>
+                <Input
+                  id="apiEndpoint"
+                  type="text"
+                  value={formData.apiEndpoint}
+                  onChange={(e) => handleInputChange("apiEndpoint", e.target.value)}
+                  className={getInputClassName("apiEndpoint")}
+                  placeholder="Enter API endpoint URL"
+                />
+                {errors.apiEndpoint && (
+                  <div className="flex items-center gap-1 mt-1 text-sm text-destructive">
+                    <AlertTriangle size={14} />
+                    {errors.apiEndpoint}
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor={`value-${index}`} className="text-sm font-medium text-foreground">
-                      Value
-                    </Label>
-                    <div className="flex gap-2">
+                )}
+              </div>
+
+              {/* API Authentication */}
+              <div>
+                <Label htmlFor="authentication">API Authentication</Label>
+                <Select value={formData.authentication} onValueChange={(value) => handleInputChange("authentication", value)}>
+                  <SelectTrigger className={getSelectClassName("authentication")}>
+                    <SelectValue placeholder="Select..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="api-key">API Key</SelectItem>
+                    <SelectItem value="bearer-token">Bearer Token</SelectItem>
+                    <SelectItem value="basic-auth">Basic Authentication</SelectItem>
+                    <SelectItem value="oauth">OAuth</SelectItem>
+                    <SelectItem value="none">None</SelectItem>
+                  </SelectContent>
+                </Select>
+                {errors.authentication && (
+                  <div className="flex items-center gap-1 mt-1 text-sm text-destructive">
+                    <AlertTriangle size={14} />
+                    {errors.authentication}
+                  </div>
+                )}
+              </div>
+
+              {/* Method */}
+              <div>
+                <Label htmlFor="method">Method</Label>
+                <Select value={formData.method} onValueChange={(value) => handleInputChange("method", value)}>
+                  <SelectTrigger className={getSelectClassName("method")}>
+                    <SelectValue placeholder="Select..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="GET">GET</SelectItem>
+                    <SelectItem value="POST">POST</SelectItem>
+                    <SelectItem value="PUT">PUT</SelectItem>
+                    <SelectItem value="DELETE">DELETE</SelectItem>
+                    <SelectItem value="PATCH">PATCH</SelectItem>
+                  </SelectContent>
+                </Select>
+                {errors.method && (
+                  <div className="flex items-center gap-1 mt-1 text-sm text-destructive">
+                    <AlertTriangle size={14} />
+                    {errors.method}
+                  </div>
+                )}
+              </div>
+
+              {/* Query Parameters Section */}
+              <div className="space-y-4">
+                <div>
+                  <h4 className="font-medium text-foreground">Add Query Parameters</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Query params are used when running data injection job
+                  </p>
+                </div>
+
+                {formData.queryParameters.map((param, index) => (
+                  <div key={index} className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor={`key-${index}`}>Key</Label>
                       <Input
-                        id={`value-${index}`}
+                        id={`key-${index}`}
                         type="text"
-                        value={param.value}
-                        onChange={(e) => handleQueryParameterChange(index, 'value', e.target.value)}
-                        className="border-input focus-visible:ring-ring flex-1"
-                        placeholder="Enter value"
+                        value={param.key}
+                        onChange={(e) => handleQueryParameterChange(index, 'key', e.target.value)}
+                        placeholder="Enter key"
                       />
-                      {formData.queryParameters.length > 1 && (
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => removeQueryParameter(index)}
-                          className="h-10 w-10 text-muted-foreground hover:text-foreground"
-                        >
-                          <X size={16} />
-                        </Button>
-                      )}
+                    </div>
+                    <div>
+                      <Label htmlFor={`value-${index}`}>Value</Label>
+                      <div className="flex gap-2">
+                        <Input
+                          id={`value-${index}`}
+                          type="text"
+                          value={param.value}
+                          onChange={(e) => handleQueryParameterChange(index, 'value', e.target.value)}
+                          className="flex-1"
+                          placeholder="Enter value"
+                        />
+                        {formData.queryParameters.length > 1 && (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => removeQueryParameter(index)}
+                            className="h-10 w-10 text-muted-foreground hover:text-foreground"
+                          >
+                            <X size={16} />
+                          </Button>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
 
-              <Button
-                type="button"
-                variant="outline"
-                onClick={addQueryParameter}
-                className="w-full justify-center gap-2"
-              >
-                <Plus size={16} />
-                Add Query Parameters
-              </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={addQueryParameter}
+                  className="w-full justify-center gap-2"
+                >
+                  <Plus size={16} />
+                  Add Query Parameters
+                </Button>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-end gap-3 p-6 border-t border-border">
+        <div className="flex justify-end gap-2 pt-6 border-t">
           <Button variant="outline" onClick={onBack}>
             Cancel
           </Button>
