@@ -9,10 +9,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { CreateDatasourceModal } from "./CreateDatasourceModal";
 import { S3ConfigSideSheet } from "./S3ConfigSideSheet";
+import { ExternalAPIConfigModal } from "./ExternalAPIConfigModal";
 
 export const DatasourcesContent = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showS3Config, setShowS3Config] = useState(false);
+  const [showExternalAPIConfig, setShowExternalAPIConfig] = useState(false);
 
   const datasources = [
     {
@@ -52,6 +54,11 @@ export const DatasourcesContent = () => {
   const handleS3Select = () => {
     setShowCreateModal(false);
     setShowS3Config(true);
+  };
+
+  const handleExternalAPISelect = () => {
+    setShowCreateModal(false);
+    setShowExternalAPIConfig(true);
   };
 
   const getStatusColor = (status: string) => {
@@ -184,10 +191,11 @@ export const DatasourcesContent = () => {
         </div>
       </main>
 
-      <CreateDatasourceModal 
-        isOpen={showCreateModal} 
+      <CreateDatasourceModal
+        isOpen={showCreateModal}
         onClose={() => setShowCreateModal(false)}
         onS3Select={handleS3Select}
+        onExternalAPISelect={handleExternalAPISelect}
       />
 
       <S3ConfigSideSheet
@@ -195,6 +203,15 @@ export const DatasourcesContent = () => {
         onClose={() => setShowS3Config(false)}
         onBack={() => {
           setShowS3Config(false);
+          setShowCreateModal(true);
+        }}
+      />
+
+      <ExternalAPIConfigModal
+        isOpen={showExternalAPIConfig}
+        onClose={() => setShowExternalAPIConfig(false)}
+        onBack={() => {
+          setShowExternalAPIConfig(false);
           setShowCreateModal(true);
         }}
       />

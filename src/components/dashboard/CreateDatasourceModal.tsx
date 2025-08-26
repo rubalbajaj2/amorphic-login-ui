@@ -5,16 +5,17 @@ interface CreateDatasourceModalProps {
   isOpen: boolean;
   onClose: () => void;
   onS3Select: () => void;
+  onExternalAPISelect: () => void;
 }
 
-export const CreateDatasourceModal = ({ isOpen, onClose, onS3Select }: CreateDatasourceModalProps) => {
+export const CreateDatasourceModal = ({ isOpen, onClose, onS3Select, onExternalAPISelect }: CreateDatasourceModalProps) => {
   if (!isOpen) return null;
 
   const datasourceTypes = [
     { name: "Amorphic", icon: Database, onClick: undefined },
     { name: "Bedrock", icon: Mountain, onClick: undefined },
     { name: "S3", icon: FolderOpen, onClick: onS3Select },
-    { name: "External API", icon: Link, onClick: undefined },
+    { name: "External API", icon: Link, onClick: onExternalAPISelect },
     { name: "Email", icon: Mail, onClick: undefined },
     { name: "SaaS", icon: Cloud, onClick: undefined },
     { name: "Stream", icon: Waves, onClick: undefined },
