@@ -10,11 +10,19 @@ import {
 import { CreateDatasourceModal } from "./CreateDatasourceModal";
 import { S3ConfigSideSheet } from "./S3ConfigSideSheet";
 import { ExternalAPIConfigModal } from "./ExternalAPIConfigModal";
+import { AmorphicConfigModal } from "./AmorphicConfigModal";
+import { EmailConfigModal } from "./EmailConfigModal";
+import { SaaSConfigModal } from "./SaaSConfigModal";
+import { StreamConfigModal } from "./StreamConfigModal";
 
 export const DatasourcesContent = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showS3Config, setShowS3Config] = useState(false);
   const [showExternalAPIConfig, setShowExternalAPIConfig] = useState(false);
+  const [showAmorphicConfig, setShowAmorphicConfig] = useState(false);
+  const [showEmailConfig, setShowEmailConfig] = useState(false);
+  const [showSaaSConfig, setShowSaaSConfig] = useState(false);
+  const [showStreamConfig, setShowStreamConfig] = useState(false);
 
   const datasources = [
     {
@@ -59,6 +67,26 @@ export const DatasourcesContent = () => {
   const handleExternalAPISelect = () => {
     setShowCreateModal(false);
     setShowExternalAPIConfig(true);
+  };
+
+  const handleAmorphicSelect = () => {
+    setShowCreateModal(false);
+    setShowAmorphicConfig(true);
+  };
+
+  const handleEmailSelect = () => {
+    setShowCreateModal(false);
+    setShowEmailConfig(true);
+  };
+
+  const handleSaaSSelect = () => {
+    setShowCreateModal(false);
+    setShowSaaSConfig(true);
+  };
+
+  const handleStreamSelect = () => {
+    setShowCreateModal(false);
+    setShowStreamConfig(true);
   };
 
   const getStatusColor = (status: string) => {
@@ -191,12 +219,16 @@ export const DatasourcesContent = () => {
         </div>
       </main>
 
-      <CreateDatasourceModal
-        isOpen={showCreateModal}
-        onClose={() => setShowCreateModal(false)}
-        onS3Select={handleS3Select}
-        onExternalAPISelect={handleExternalAPISelect}
-      />
+        <CreateDatasourceModal
+          isOpen={showCreateModal}
+          onClose={() => setShowCreateModal(false)}
+          onS3Select={handleS3Select}
+          onExternalAPISelect={handleExternalAPISelect}
+          onAmorphicSelect={handleAmorphicSelect}
+          onEmailSelect={handleEmailSelect}
+          onSaaSSelect={handleSaaSSelect}
+          onStreamSelect={handleStreamSelect}
+        />
 
       <S3ConfigSideSheet
         isOpen={showS3Config}
@@ -207,14 +239,50 @@ export const DatasourcesContent = () => {
         }}
       />
 
-      <ExternalAPIConfigModal
-        isOpen={showExternalAPIConfig}
-        onClose={() => setShowExternalAPIConfig(false)}
-        onBack={() => {
-          setShowExternalAPIConfig(false);
-          setShowCreateModal(true);
-        }}
-      />
+        <ExternalAPIConfigModal
+          isOpen={showExternalAPIConfig}
+          onClose={() => setShowExternalAPIConfig(false)}
+          onBack={() => {
+            setShowExternalAPIConfig(false);
+            setShowCreateModal(true);
+          }}
+        />
+
+        <AmorphicConfigModal
+          isOpen={showAmorphicConfig}
+          onClose={() => setShowAmorphicConfig(false)}
+          onBack={() => {
+            setShowAmorphicConfig(false);
+            setShowCreateModal(true);
+          }}
+        />
+
+        <EmailConfigModal
+          isOpen={showEmailConfig}
+          onClose={() => setShowEmailConfig(false)}
+          onBack={() => {
+            setShowEmailConfig(false);
+            setShowCreateModal(true);
+          }}
+        />
+
+        <SaaSConfigModal
+          isOpen={showSaaSConfig}
+          onClose={() => setShowSaaSConfig(false)}
+          onBack={() => {
+            setShowSaaSConfig(false);
+            setShowCreateModal(true);
+          }}
+        />
+
+        <StreamConfigModal
+          isOpen={showStreamConfig}
+          onClose={() => setShowStreamConfig(false)}
+          onBack={() => {
+            setShowStreamConfig(false);
+            setShowCreateModal(true);
+          }}
+        />
     </>
   );
 };

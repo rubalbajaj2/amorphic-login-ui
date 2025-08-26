@@ -6,19 +6,23 @@ interface CreateDatasourceModalProps {
   onClose: () => void;
   onS3Select: () => void;
   onExternalAPISelect: () => void;
+  onAmorphicSelect: () => void;
+  onEmailSelect: () => void;
+  onSaaSSelect: () => void;
+  onStreamSelect: () => void;
 }
 
-export const CreateDatasourceModal = ({ isOpen, onClose, onS3Select, onExternalAPISelect }: CreateDatasourceModalProps) => {
+export const CreateDatasourceModal = ({ isOpen, onClose, onS3Select, onExternalAPISelect, onAmorphicSelect, onEmailSelect, onSaaSSelect, onStreamSelect }: CreateDatasourceModalProps) => {
   if (!isOpen) return null;
 
   const datasourceTypes = [
-    { name: "Amorphic", icon: Database, onClick: undefined },
+    { name: "Amorphic", icon: Database, onClick: onAmorphicSelect },
     { name: "Bedrock", icon: Mountain, onClick: undefined },
     { name: "S3", icon: FolderOpen, onClick: onS3Select },
     { name: "External API", icon: Link, onClick: onExternalAPISelect },
-    { name: "Email", icon: Mail, onClick: undefined },
-    { name: "SaaS", icon: Cloud, onClick: undefined },
-    { name: "Stream", icon: Waves, onClick: undefined },
+    { name: "Email", icon: Mail, onClick: onEmailSelect },
+    { name: "SaaS", icon: Cloud, onClick: onSaaSSelect },
+    { name: "Stream", icon: Waves, onClick: onStreamSelect },
     { name: "Oracle", icon: Circle, onClick: undefined },
     { name: "MySQL", icon: CircleDot, onClick: undefined },
     { name: "PostgreSQL", icon: Server, onClick: undefined },
