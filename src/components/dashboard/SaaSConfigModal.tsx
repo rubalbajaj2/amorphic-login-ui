@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X, Database, Plus, AlertTriangle, Upload, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -11,6 +12,7 @@ interface SaaSConfigModalProps {
 }
 
 interface FormData {
+  datasourceName: string;
   appType: string;
   uploadedFile: File | null;
 }
@@ -21,6 +23,7 @@ interface FormErrors {
 
 export const SaaSConfigModal = ({ isOpen, onClose, onBack }: SaaSConfigModalProps) => {
   const [formData, setFormData] = useState<FormData>({
+    datasourceName: "",
     appType: "",
     uploadedFile: null
   });
@@ -38,6 +41,14 @@ export const SaaSConfigModal = ({ isOpen, onClose, onBack }: SaaSConfigModalProp
   ];
 
   if (!isOpen) return null;
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: "" }));
+    }
+  };
 
   const handleSelectChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -91,12 +102,21 @@ export const SaaSConfigModal = ({ isOpen, onClose, onBack }: SaaSConfigModalProp
   const validateForm = () => {
     const newErrors: FormErrors = {};
     
+    if (!formData.datasourceName.trim()) {
+      newErrors.datasourceName = "Please enter Datasource Name";
+    }
     if (!formData.appType) {
       newErrors.appType = "Please select an App Type";
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+
+  const getInputClassName = (field: string) => {
+    return errors[field] 
+      ? "border-destructive focus:border-destructive focus:ring-destructive" 
+      : "";
   };
 
   const handleCreate = () => {
@@ -137,6 +157,24 @@ export const SaaSConfigModal = ({ isOpen, onClose, onBack }: SaaSConfigModalProp
             <div>
               <h3 className="font-medium text-foreground mb-1">Ingestion Type</h3>
               <p className="text-sm text-muted-foreground">Enter Ingestion details</p>
+            </div>
+
+            {/* Datasource Name */}
+            <div>
+              <Label htmlFor="datasourceName">Datasource Name</Label>
+              <Input
+                id="datasourceName"
+                value={formData.datasourceName}
+                onChange={(e) => handleInputChange("datasourceName", e.target.value)}
+                className={getInputClassName("datasourceName")}
+                placeholder="Enter datasource name"
+              />
+              {errors.datasourceName && (
+                <div className="flex items-center gap-1 mt-1 text-sm text-destructive">
+                  <AlertTriangle size={14} />
+                  {errors.datasourceName}
+                </div>
+              )}
             </div>
 
             {/* App Type */}

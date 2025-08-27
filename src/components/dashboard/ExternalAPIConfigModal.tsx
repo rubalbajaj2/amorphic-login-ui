@@ -17,6 +17,7 @@ interface QueryParameter {
 }
 
 interface FormData {
+  datasourceName: string;
   version: string;
   apiEndpoint: string;
   authentication: string;
@@ -30,6 +31,7 @@ interface FormErrors {
 
 export const ExternalAPIConfigModal = ({ isOpen, onClose, onBack }: ExternalAPIConfigModalProps) => {
   const [formData, setFormData] = useState<FormData>({
+    datasourceName: "",
     version: "1.6",
     apiEndpoint: "",
     authentication: "",
@@ -42,7 +44,7 @@ export const ExternalAPIConfigModal = ({ isOpen, onClose, onBack }: ExternalAPIC
   if (!isOpen) return null;
 
   const handleInputChange = (field: string, value: string) => {
-    if (field === 'version' || field === 'apiEndpoint' || field === 'authentication' || field === 'method') {
+    if (field === 'datasourceName' || field === 'version' || field === 'apiEndpoint' || field === 'authentication' || field === 'method') {
       setFormData(prev => ({ ...prev, [field]: value }));
     }
     // Clear error when user starts typing
@@ -73,6 +75,10 @@ export const ExternalAPIConfigModal = ({ isOpen, onClose, onBack }: ExternalAPIC
 
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
+
+    if (!formData.datasourceName.trim()) {
+      newErrors.datasourceName = "Please enter Datasource Name";
+    }
 
     if (!formData.apiEndpoint.trim()) {
       newErrors.apiEndpoint = "Please enter the API Endpoint";
@@ -144,6 +150,24 @@ export const ExternalAPIConfigModal = ({ isOpen, onClose, onBack }: ExternalAPIC
 
             {/* Form Fields */}
             <div className="space-y-4">
+              {/* Datasource Name */}
+              <div>
+                <Label htmlFor="datasourceName">Datasource Name</Label>
+                <Input
+                  id="datasourceName"
+                  value={formData.datasourceName}
+                  onChange={(e) => handleInputChange("datasourceName", e.target.value)}
+                  className={getInputClassName("datasourceName")}
+                  placeholder="Enter datasource name"
+                />
+                {errors.datasourceName && (
+                  <div className="flex items-center gap-1 mt-1 text-sm text-destructive">
+                    <AlertTriangle size={14} />
+                    {errors.datasourceName}
+                  </div>
+                )}
+              </div>
+
               {/* Select Version */}
               <div>
                 <Label htmlFor="version" className="text-sm font-medium text-foreground">

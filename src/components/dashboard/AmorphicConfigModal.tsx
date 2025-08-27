@@ -12,6 +12,7 @@ interface AmorphicConfigModalProps {
 }
 
 interface FormData {
+  datasourceName: string;
   amorphicUrl: string;
   accessToken: string;
   domain: string;
@@ -25,6 +26,7 @@ interface FormErrors {
 
 export const AmorphicConfigModal = ({ isOpen, onClose, onBack }: AmorphicConfigModalProps) => {
   const [formData, setFormData] = useState<FormData>({
+    datasourceName: "",
     amorphicUrl: "",
     accessToken: "",
     domain: "",
@@ -47,6 +49,9 @@ export const AmorphicConfigModal = ({ isOpen, onClose, onBack }: AmorphicConfigM
   const validateForm = () => {
     const newErrors: FormErrors = {};
     
+    if (!formData.datasourceName.trim()) {
+      newErrors.datasourceName = "Please enter Datasource Name";
+    }
     if (!formData.amorphicUrl.trim()) {
       newErrors.amorphicUrl = "Please provide Amorphic URL";
     }
@@ -106,6 +111,24 @@ export const AmorphicConfigModal = ({ isOpen, onClose, onBack }: AmorphicConfigM
 
             {/* Form Fields */}
             <div className="space-y-4">
+              {/* Datasource Name */}
+              <div>
+                <Label htmlFor="datasourceName">Datasource Name</Label>
+                <Input
+                  id="datasourceName"
+                  value={formData.datasourceName}
+                  onChange={(e) => handleInputChange("datasourceName", e.target.value)}
+                  className={getInputClassName("datasourceName")}
+                  placeholder="Enter datasource name"
+                />
+                {errors.datasourceName && (
+                  <div className="flex items-center gap-1 mt-1 text-sm text-destructive">
+                    <AlertTriangle size={14} />
+                    {errors.datasourceName}
+                  </div>
+                )}
+              </div>
+
               {/* Amorphic URL */}
               <div>
                 <Label htmlFor="amorphicUrl">Amorphic URL</Label>

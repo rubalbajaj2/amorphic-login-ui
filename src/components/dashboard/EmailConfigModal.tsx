@@ -12,6 +12,7 @@ interface EmailConfigModalProps {
 }
 
 interface FormData {
+  datasourceName: string;
   emailAddress: string;
   enableScan: boolean;
   enableTLS: boolean;
@@ -23,6 +24,7 @@ interface FormErrors {
 
 export const EmailConfigModal = ({ isOpen, onClose, onBack }: EmailConfigModalProps) => {
   const [formData, setFormData] = useState<FormData>({
+    datasourceName: "",
     emailAddress: "",
     enableScan: false,
     enableTLS: false
@@ -43,6 +45,9 @@ export const EmailConfigModal = ({ isOpen, onClose, onBack }: EmailConfigModalPr
   const validateForm = () => {
     const newErrors: FormErrors = {};
     
+    if (!formData.datasourceName.trim()) {
+      newErrors.datasourceName = "Please enter Datasource Name";
+    }
     if (!formData.emailAddress.trim()) {
       newErrors.emailAddress = "Please enter Email Address";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.emailAddress)) {
@@ -101,6 +106,24 @@ export const EmailConfigModal = ({ isOpen, onClose, onBack }: EmailConfigModalPr
 
             {/* Form Fields */}
             <div className="space-y-4">
+              {/* Datasource Name */}
+              <div>
+                <Label htmlFor="datasourceName">Datasource Name</Label>
+                <Input
+                  id="datasourceName"
+                  value={formData.datasourceName}
+                  onChange={(e) => handleInputChange("datasourceName", e.target.value)}
+                  className={getInputClassName("datasourceName")}
+                  placeholder="Enter datasource name"
+                />
+                {errors.datasourceName && (
+                  <div className="flex items-center gap-1 mt-1 text-sm text-destructive">
+                    <AlertTriangle size={14} />
+                    {errors.datasourceName}
+                  </div>
+                )}
+              </div>
+
               {/* Email Address */}
               <div>
                 <Label htmlFor="emailAddress">Email Address</Label>

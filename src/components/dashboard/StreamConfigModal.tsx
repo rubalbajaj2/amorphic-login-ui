@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X, Database, Plus, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -11,6 +12,7 @@ interface StreamConfigModalProps {
 }
 
 interface FormData {
+  datasourceName: string;
   streamType: string;
   streamMode: string;
 }
@@ -21,6 +23,7 @@ interface FormErrors {
 
 export const StreamConfigModal = ({ isOpen, onClose, onBack }: StreamConfigModalProps) => {
   const [formData, setFormData] = useState<FormData>({
+    datasourceName: "",
     streamType: "kinesis",
     streamMode: ""
   });
@@ -30,6 +33,14 @@ export const StreamConfigModal = ({ isOpen, onClose, onBack }: StreamConfigModal
   const streamModes = ["Provisioned", "On Demand"];
 
   if (!isOpen) return null;
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: "" }));
+    }
+  };
 
   const handleSelectChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -42,6 +53,9 @@ export const StreamConfigModal = ({ isOpen, onClose, onBack }: StreamConfigModal
   const validateForm = () => {
     const newErrors: FormErrors = {};
     
+    if (!formData.datasourceName.trim()) {
+      newErrors.datasourceName = "Please enter Datasource Name";
+    }
     if (!formData.streamType) {
       newErrors.streamType = "Please select a Stream Type";
     }
@@ -95,6 +109,24 @@ export const StreamConfigModal = ({ isOpen, onClose, onBack }: StreamConfigModal
 
             {/* Form Fields */}
             <div className="space-y-4">
+              {/* Datasource Name */}
+              <div>
+                <Label htmlFor="datasourceName">Datasource Name</Label>
+                <Input
+                  id="datasourceName"
+                  value={formData.datasourceName}
+                  onChange={(e) => handleInputChange("datasourceName", e.target.value)}
+                  className={errors.datasourceName ? "border-destructive focus:border-destructive focus:ring-destructive" : ""}
+                  placeholder="Enter datasource name"
+                />
+                {errors.datasourceName && (
+                  <div className="flex items-center gap-1 mt-1 text-sm text-destructive">
+                    <AlertTriangle size={14} />
+                    {errors.datasourceName}
+                  </div>
+                )}
+              </div>
+
               {/* Stream Type */}
               <div>
                 <Label htmlFor="streamType">Stream Type</Label>
