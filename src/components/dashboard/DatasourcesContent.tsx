@@ -14,6 +14,8 @@ import { AmorphicConfigModal } from "./AmorphicConfigModal";
 import { EmailConfigModal } from "./EmailConfigModal";
 import { SaaSConfigModal } from "./SaaSConfigModal";
 import { StreamConfigModal } from "./StreamConfigModal";
+import { OracleConfigModal } from "./OracleConfigModal";
+import { MySQLConfigModal } from "./MySQLConfigModal";
 
 export const DatasourcesContent = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -23,6 +25,8 @@ export const DatasourcesContent = () => {
   const [showEmailConfig, setShowEmailConfig] = useState(false);
   const [showSaaSConfig, setShowSaaSConfig] = useState(false);
   const [showStreamConfig, setShowStreamConfig] = useState(false);
+  const [showOracleConfig, setShowOracleConfig] = useState(false);
+  const [showMySQLConfig, setShowMySQLConfig] = useState(false);
 
   const datasources = [
     {
@@ -87,6 +91,16 @@ export const DatasourcesContent = () => {
   const handleStreamSelect = () => {
     setShowCreateModal(false);
     setShowStreamConfig(true);
+  };
+
+  const handleOracleSelect = () => {
+    setShowCreateModal(false);
+    setShowOracleConfig(true);
+  };
+
+  const handleMySQLSelect = () => {
+    setShowCreateModal(false);
+    setShowMySQLConfig(true);
   };
 
   const getStatusColor = (status: string) => {
@@ -225,9 +239,11 @@ export const DatasourcesContent = () => {
           onS3Select={handleS3Select}
           onExternalAPISelect={handleExternalAPISelect}
           onAmorphicSelect={handleAmorphicSelect}
-          onEmailSelect={handleEmailSelect}
-          onSaaSSelect={handleSaaSSelect}
-          onStreamSelect={handleStreamSelect}
+        onEmailSelect={handleEmailSelect}
+        onSaaSSelect={handleSaaSSelect}
+        onStreamSelect={handleStreamSelect}
+        onOracleSelect={handleOracleSelect}
+        onMySQLSelect={handleMySQLSelect}
         />
 
       <S3ConfigSideSheet
@@ -275,14 +291,32 @@ export const DatasourcesContent = () => {
           }}
         />
 
-        <StreamConfigModal
-          isOpen={showStreamConfig}
-          onClose={() => setShowStreamConfig(false)}
-          onBack={() => {
-            setShowStreamConfig(false);
-            setShowCreateModal(true);
-          }}
-        />
+      <StreamConfigModal
+        isOpen={showStreamConfig}
+        onClose={() => setShowStreamConfig(false)}
+        onBack={() => {
+          setShowStreamConfig(false);
+          setShowCreateModal(true);
+        }}
+      />
+
+      <OracleConfigModal
+        isOpen={showOracleConfig}
+        onClose={() => setShowOracleConfig(false)}
+        onBack={() => {
+          setShowOracleConfig(false);
+          setShowCreateModal(true);
+        }}
+      />
+
+      <MySQLConfigModal
+        isOpen={showMySQLConfig}
+        onClose={() => setShowMySQLConfig(false)}
+        onBack={() => {
+          setShowMySQLConfig(false);
+          setShowCreateModal(true);
+        }}
+      />
     </>
   );
 };

@@ -10,9 +10,11 @@ interface CreateDatasourceModalProps {
   onEmailSelect: () => void;
   onSaaSSelect: () => void;
   onStreamSelect: () => void;
+  onOracleSelect: () => void;
+  onMySQLSelect: () => void;
 }
 
-export const CreateDatasourceModal = ({ isOpen, onClose, onS3Select, onExternalAPISelect, onAmorphicSelect, onEmailSelect, onSaaSSelect, onStreamSelect }: CreateDatasourceModalProps) => {
+export const CreateDatasourceModal = ({ isOpen, onClose, onS3Select, onExternalAPISelect, onAmorphicSelect, onEmailSelect, onSaaSSelect, onStreamSelect, onOracleSelect, onMySQLSelect }: CreateDatasourceModalProps) => {
   if (!isOpen) return null;
 
   const datasourceTypes = [
@@ -23,8 +25,8 @@ export const CreateDatasourceModal = ({ isOpen, onClose, onS3Select, onExternalA
     { name: "Email", icon: Mail, onClick: onEmailSelect },
     { name: "SaaS", icon: Cloud, onClick: onSaaSSelect },
     { name: "Stream", icon: Waves, onClick: onStreamSelect },
-    { name: "Oracle", icon: Circle, onClick: undefined },
-    { name: "MySQL", icon: CircleDot, onClick: undefined },
+    { name: "Oracle", icon: Circle, onClick: onOracleSelect },
+    { name: "MySQL", icon: CircleDot, onClick: onMySQLSelect },
     { name: "PostgreSQL", icon: Server, onClick: undefined },
     { name: "Microsoft SQL Server", icon: Building, onClick: undefined },
     { name: "IBM DB2(LUW)", icon: Database, onClick: undefined },
