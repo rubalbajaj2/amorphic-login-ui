@@ -5,12 +5,14 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { LoginPage } from "./components/LoginPage";
 import { DashboardPage } from "./components/DashboardPage";
+import { NHSPage } from "./components/NHSPage";
 import { useToast } from "@/hooks/use-toast";
 
 const queryClient = new QueryClient();
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentPage, setCurrentPage] = useState<'dashboard' | 'nhs'>('dashboard');
   const { toast } = useToast();
 
   const handleLogin = (email: string, password: string) => {
@@ -34,10 +36,15 @@ const App = () => {
 
   const handleLogout = () => {
     setIsAuthenticated(false);
+    setCurrentPage('dashboard');
     toast({
       title: "Logged Out",
       description: "You have been successfully logged out",
     });
+  };
+
+  const handleNHSClick = () => {
+    setCurrentPage('nhs');
   };
 
   return (
@@ -46,7 +53,11 @@ const App = () => {
         <Toaster />
         <Sonner />
         {isAuthenticated ? (
-          <DashboardPage onLogout={handleLogout} />
+          currentPage === 'nhs' ? (
+            <NHSPage onLogout={handleLogout} />
+          ) : (
+            <DashboardPage onLogout={handleLogout} onNHSClick={handleNHSClick} />
+          )
         ) : (
           <LoginPage onLogin={handleLogin} />
         )}

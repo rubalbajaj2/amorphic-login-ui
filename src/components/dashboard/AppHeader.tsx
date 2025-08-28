@@ -5,6 +5,7 @@ import { AmorphicLogoSVG } from "../AmorphicLogoSVG";
 import { DiscoverMenu } from "./DiscoverMenu";
 import { ExploreMenu } from "./ExploreMenu";
 import { ManageMenu } from "./ManageMenu";
+import { SolutionsMenu } from "./SolutionsMenu";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,9 +15,10 @@ import {
 
 interface AppHeaderProps {
   onLogout: () => void;
+  onNHSClick?: () => void;
 }
 
-export const AppHeader = ({ onLogout }: AppHeaderProps) => {
+export const AppHeader = ({ onLogout, onNHSClick }: AppHeaderProps) => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
 
   const toggleMenu = (menuName: string) => {
@@ -58,6 +60,14 @@ export const AppHeader = ({ onLogout }: AppHeaderProps) => {
             >
               Manage
               <ChevronDown size={16} className={`transition-transform ${activeMenu === 'manage' ? 'rotate-180' : ''}`} />
+            </button>
+            
+            <button
+              onClick={() => toggleMenu('solutions')}
+              className="flex items-center gap-1 font-medium text-foreground hover:text-primary transition-colors"
+            >
+              Solutions
+              <ChevronDown size={16} className={`transition-transform ${activeMenu === 'solutions' ? 'rotate-180' : ''}`} />
             </button>
           </nav>
         </div>
@@ -103,6 +113,7 @@ export const AppHeader = ({ onLogout }: AppHeaderProps) => {
       {activeMenu === 'discover' && <DiscoverMenu onClose={closeMenus} />}
       {activeMenu === 'explore' && <ExploreMenu onClose={closeMenus} />}
       {activeMenu === 'manage' && <ManageMenu onClose={closeMenus} />}
+      {activeMenu === 'solutions' && <SolutionsMenu onClose={closeMenus} onNHSClick={onNHSClick || (() => {})} />}
     </div>
   );
 };
