@@ -3,31 +3,41 @@ import { MenuCard } from "./MenuCard";
 
 interface DiscoverMenuProps {
   onClose: () => void;
+  onNavigate: (page: string) => void;
 }
 
-export const DiscoverMenu = ({ onClose }: DiscoverMenuProps) => {
+export const DiscoverMenu = ({ onClose, onNavigate }: DiscoverMenuProps) => {
   const items = [
     {
       icon: Book,
       title: "Catalog",
-      description: "Browse all available assets"
+      description: "Browse all available assets",
+      page: "catalog"
     },
     {
       icon: Database,
       title: "Datasets",
-      description: "Access and manage data"
+      description: "Access and manage data",
+      page: "datasets"
     },
     {
       icon: Tag,
       title: "Glossaries",
-      description: "Define and align terms"
+      description: "Define and align terms",
+      page: "glossaries"
     },
     {
       icon: Grid3X3,
       title: "HCLS",
-      description: "Manage HCLS Health Lake"
+      description: "Manage HCLS Health Lake",
+      page: "hcls"
     }
   ];
+
+  const handleItemClick = (page: string) => {
+    onNavigate(page);
+    onClose();
+  };
 
   return (
     <div className="absolute top-full left-0 right-0 bg-popover rounded-lg shadow-xl border border-border p-6 animate-accordion-down z-50">
@@ -39,7 +49,7 @@ export const DiscoverMenu = ({ onClose }: DiscoverMenuProps) => {
               icon={item.icon}
               title={item.title}
               description={item.description}
-              onClick={onClose}
+              onClick={() => handleItemClick(item.page)}
             />
           ))}
         </div>

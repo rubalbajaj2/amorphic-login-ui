@@ -3,26 +3,35 @@ import { MenuCard } from "./MenuCard";
 
 interface ExploreMenuProps {
   onClose: () => void;
+  onNavigate: (page: string) => void;
 }
 
-export const ExploreMenu = ({ onClose }: ExploreMenuProps) => {
+export const ExploreMenu = ({ onClose, onNavigate }: ExploreMenuProps) => {
   const items = [
     {
       icon: Code,
       title: "Playground",
-      description: "Query discovered data using SQL"
+      description: "Query discovered data using SQL",
+      page: "playground"
     },
     {
       icon: BookOpen,
       title: "Data Labs",
-      description: "Explore data using Jupyter notebooks, RStudio, etc."
+      description: "Explore data using Jupyter notebooks, RStudio, etc.",
+      page: "data-labs"
     },
     {
       icon: Settings,
       title: "Apps",
-      description: "Explore data using annex applications of Amorphic"
+      description: "Explore data using annex applications of Amorphic",
+      page: "apps"
     }
   ];
+
+  const handleItemClick = (page: string) => {
+    onNavigate(page);
+    onClose();
+  };
 
   return (
     <div className="absolute top-full left-0 right-0 bg-popover rounded-lg shadow-xl border border-border p-6 animate-accordion-down z-50">
@@ -34,7 +43,7 @@ export const ExploreMenu = ({ onClose }: ExploreMenuProps) => {
               icon={item.icon}
               title={item.title}
               description={item.description}
-              onClick={onClose}
+              onClick={() => handleItemClick(item.page)}
             />
           ))}
         </div>

@@ -16,9 +16,10 @@ import {
 interface AppHeaderProps {
   onLogout: () => void;
   onNHSClick?: () => void;
+  onNavigate?: (page: string) => void;
 }
 
-export const AppHeader = ({ onLogout, onNHSClick }: AppHeaderProps) => {
+export const AppHeader = ({ onLogout, onNHSClick, onNavigate }: AppHeaderProps) => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
 
   const toggleMenu = (menuName: string) => {
@@ -35,7 +36,10 @@ export const AppHeader = ({ onLogout, onNHSClick }: AppHeaderProps) => {
           <AmorphicLogoSVG className="h-6" />
           
           <nav className="flex items-center gap-4">
-            <button className="font-medium text-foreground hover:text-primary transition-colors">
+            <button 
+              onClick={() => onNavigate?.('dashboard')}
+              className="font-medium text-foreground hover:text-primary transition-colors"
+            >
               Home
             </button>
             <button
@@ -110,9 +114,9 @@ export const AppHeader = ({ onLogout, onNHSClick }: AppHeaderProps) => {
       </header>
 
       {/* Dropdown Menus */}
-      {activeMenu === 'discover' && <DiscoverMenu onClose={closeMenus} />}
-      {activeMenu === 'explore' && <ExploreMenu onClose={closeMenus} />}
-      {activeMenu === 'manage' && <ManageMenu onClose={closeMenus} />}
+      {activeMenu === 'discover' && <DiscoverMenu onClose={closeMenus} onNavigate={onNavigate || (() => {})} />}
+      {activeMenu === 'explore' && <ExploreMenu onClose={closeMenus} onNavigate={onNavigate || (() => {})} />}
+      {activeMenu === 'manage' && <ManageMenu onClose={closeMenus} onNavigate={onNavigate || (() => {})} />}
       {activeMenu === 'solutions' && <SolutionsMenu onClose={closeMenus} onNHSClick={onNHSClick || (() => {})} />}
     </div>
   );

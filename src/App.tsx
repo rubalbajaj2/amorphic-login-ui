@@ -6,13 +6,17 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { LoginPage } from "./components/LoginPage";
 import { DashboardPage } from "./components/DashboardPage";
 import { NHSPage } from "./components/NHSPage";
+import { AdministrationPage } from "./components/AdministrationPage";
+import { CatalogPage } from "./components/CatalogPage";
 import { useToast } from "@/hooks/use-toast";
 
 const queryClient = new QueryClient();
 
+type PageType = 'dashboard' | 'nhs' | 'administration' | 'catalog' | 'datasets' | 'glossaries' | 'hcls' | 'shared-resources' | 'etl-jobs' | 'data-pipelines' | 'apps' | 'playground';
+
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [currentPage, setCurrentPage] = useState<'dashboard' | 'nhs'>('dashboard');
+  const [currentPage, setCurrentPage] = useState<PageType>('dashboard');
   const { toast } = useToast();
 
   const handleLogin = (email: string, password: string) => {
@@ -47,20 +51,31 @@ const App = () => {
     setCurrentPage('nhs');
   };
 
+  const handleNavigate = (page: PageType) => {
+    setCurrentPage(page);
+  };
+
+  const renderCurrentPage = () => {
+    const commonProps = { onLogout: handleLogout, onNavigate: handleNavigate };
+    
+    switch (currentPage) {
+      case 'nhs':
+        return <NHSPage onLogout={handleLogout} />;
+      case 'administration':
+        return <AdministrationPage {...commonProps} />;
+      case 'catalog':
+        return <CatalogPage {...commonProps} />;
+      default:
+        return <DashboardPage onLogout={handleLogout} onNHSClick={handleNHSClick} onNavigate={handleNavigate} />;
+    }
+  };
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        {isAuthenticated ? (
-          currentPage === 'nhs' ? (
-            <NHSPage onLogout={handleLogout} />
-          ) : (
-            <DashboardPage onLogout={handleLogout} onNHSClick={handleNHSClick} />
-          )
-        ) : (
-          <LoginPage onLogin={handleLogin} />
-        )}
+        {isAuthenticated ? renderCurrentPage() : <LoginPage onLogin={handleLogin} />}
       </TooltipProvider>
     </QueryClientProvider>
   );

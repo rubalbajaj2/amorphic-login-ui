@@ -4,6 +4,7 @@ import { DatasourcesContent } from "./dashboard/DatasourcesContent";
 interface DashboardPageProps {
   onLogout: () => void;
   onNHSClick?: () => void;
+  onNavigate?: (page: string) => void;
 }
 
 export const DashboardPage = ({ onLogout, onNHSClick }: DashboardPageProps) => {
