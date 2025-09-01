@@ -2,12 +2,13 @@ import { AppHeader } from "./dashboard/AppHeader";
 
 interface NHSPageProps {
   onLogout: () => void;
+  onNavigate?: (page: string) => void;
 }
 
-export const NHSPage = ({ onLogout }: NHSPageProps) => {
+export const NHSPage = ({ onLogout, onNavigate }: NHSPageProps) => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <AppHeader onLogout={onLogout} />
+      <AppHeader onLogout={onLogout} onNavigate={onNavigate} />
       <div className="flex-1 p-4">
         <div className="h-full w-full rounded-lg overflow-hidden border border-border">
           <iframe

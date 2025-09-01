@@ -60,7 +60,7 @@ const App = () => {
     
     switch (currentPage) {
       case 'nhs':
-        return <NHSPage onLogout={handleLogout} />;
+        return <NHSPage onLogout={handleLogout} onNavigate={handleNavigate} />;
       case 'administration':
         return <AdministrationPage {...commonProps} />;
       case 'catalog':
