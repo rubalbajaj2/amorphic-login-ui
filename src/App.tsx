@@ -8,11 +8,20 @@ import { DashboardPage } from "./components/DashboardPage";
 import { NHSPage } from "./components/NHSPage";
 import { AdministrationPage } from "./components/AdministrationPage";
 import { CatalogPage } from "./components/CatalogPage";
+import { DatasetsPage } from "./components/DatasetsPage";
+import { GlossariesPage } from "./components/GlossariesPage";
+import { HCLSPage } from "./components/HCLSPage";
+import { SharedResourcesPage } from "./components/SharedResourcesPage";
+import { ETLJobsPage } from "./components/ETLJobsPage";
+import { DataPipelinesPage } from "./components/DataPipelinesPage";
+import { AppsPage } from "./components/AppsPage";
+import { PlaygroundPage } from "./components/PlaygroundPage";
+import { DataLabsPage } from "./components/DataLabsPage";
 import { useToast } from "@/hooks/use-toast";
 
 const queryClient = new QueryClient();
 
-type PageType = 'dashboard' | 'nhs' | 'administration' | 'catalog' | 'datasets' | 'glossaries' | 'hcls' | 'shared-resources' | 'etl-jobs' | 'data-pipelines' | 'apps' | 'playground';
+type PageType = 'dashboard' | 'nhs' | 'administration' | 'catalog' | 'datasets' | 'glossaries' | 'hcls' | 'shared-resources' | 'etl-jobs' | 'data-pipelines' | 'apps' | 'playground' | 'data-labs';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -65,6 +74,24 @@ const App = () => {
         return <AdministrationPage {...commonProps} />;
       case 'catalog':
         return <CatalogPage {...commonProps} />;
+      case 'datasets':
+        return <DatasetsPage {...commonProps} />;
+      case 'glossaries':
+        return <GlossariesPage {...commonProps} />;
+      case 'hcls':
+        return <HCLSPage {...commonProps} />;
+      case 'shared-resources':
+        return <SharedResourcesPage {...commonProps} />;
+      case 'etl-jobs':
+        return <ETLJobsPage {...commonProps} />;
+      case 'data-pipelines':
+        return <DataPipelinesPage {...commonProps} />;
+      case 'apps':
+        return <AppsPage {...commonProps} />;
+      case 'playground':
+        return <PlaygroundPage {...commonProps} />;
+      case 'data-labs':
+        return <DataLabsPage {...commonProps} />;
       default:
         return <DashboardPage onLogout={handleLogout} onNHSClick={handleNHSClick} onNavigate={handleNavigate} />;
     }
