@@ -42,12 +42,31 @@ export const CatalogPage = ({ onLogout, onNavigate }: CatalogPageProps) => {
                 </div>
                 <select className="px-4 py-2 border border-input rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary">
                   <option>Filter by Target Location</option>
+                  <option>S3</option>
+                  <option>S3athena</option>
+                  <option>Redshift</option>
+                  <option>DynamoDB</option>
                 </select>
                 <select className="px-4 py-2 border border-input rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary">
                   <option>Filter by File Type</option>
+                  <option>csv</option>
+                  <option>others</option>
+                  <option>parquet</option>
+                  <option>xlsx</option>
+                  <option>json</option>
+                  <option>pdf</option>
+                  <option>txt</option>
+                  <option>jpg</option>
+                  <option>wav</option>
+                  <option>png</option>
+                  <option>jpeg</option>
+                  <option>mp3</option>
                 </select>
                 <select className="px-4 py-2 border border-input rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary">
                   <option>Filter by Domain</option>
+                  <option>demo</option>
+                  <option>Test1</option>
+                  <option>Test2</option>
                 </select>
                 <button className="bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90">
                   Advanced Filters

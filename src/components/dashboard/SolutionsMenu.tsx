@@ -42,7 +42,10 @@ export const SolutionsMenu = ({ onClose, onNavigate }: SolutionsMenuProps) => {
           ))}
         </div>
         
-        <button className="flex items-center gap-2 border border-input rounded-md p-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+        <button 
+          onClick={() => window.open('https://www.v3docs.amorphicdata.io/docs/latest/', '_blank')}
+          className="flex items-center gap-2 border border-input rounded-md p-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
           See Documentation
           <ExternalLink size={14} />
         </button>
