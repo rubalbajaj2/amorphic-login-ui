@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { LoginPage } from "./components/LoginPage";
 import { DashboardPage } from "./components/DashboardPage";
 import { NHSPage } from "./components/NHSPage";
+import { UnifiedPublicSafetyPage } from "./components/UnifiedPublicSafetyPage";
 import { AdministrationPage } from "./components/AdministrationPage";
 import { CatalogPage } from "./components/CatalogPage";
 import { DatasetsPage } from "./components/DatasetsPage";
@@ -21,7 +22,7 @@ import { useToast } from "@/hooks/use-toast";
 
 const queryClient = new QueryClient();
 
-type PageType = 'dashboard' | 'nhs' | 'administration' | 'catalog' | 'datasets' | 'glossaries' | 'hcls' | 'shared-resources' | 'etl-jobs' | 'data-pipelines' | 'apps' | 'playground' | 'data-labs';
+type PageType = 'dashboard' | 'nhs' | 'administration' | 'catalog' | 'datasets' | 'glossaries' | 'hcls' | 'shared-resources' | 'etl-jobs' | 'data-pipelines' | 'apps' | 'playground' | 'data-labs' | 'unified-public-safety';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -56,10 +57,6 @@ const App = () => {
     });
   };
 
-  const handleNHSClick = () => {
-    setCurrentPage('nhs');
-  };
-
   const handleNavigate = (page: PageType) => {
     setCurrentPage(page);
   };
@@ -70,6 +67,8 @@ const App = () => {
     switch (currentPage) {
       case 'nhs':
         return <NHSPage onLogout={handleLogout} onNavigate={handleNavigate} />;
+      case 'unified-public-safety':
+        return <UnifiedPublicSafetyPage onLogout={handleLogout} onNavigate={handleNavigate} />;
       case 'administration':
         return <AdministrationPage {...commonProps} />;
       case 'catalog':
@@ -93,7 +92,7 @@ const App = () => {
       case 'data-labs':
         return <DataLabsPage {...commonProps} />;
       default:
-        return <DashboardPage onLogout={handleLogout} onNHSClick={handleNHSClick} onNavigate={handleNavigate} />;
+        return <DashboardPage onLogout={handleLogout} onNavigate={handleNavigate} />;
     }
   };
 

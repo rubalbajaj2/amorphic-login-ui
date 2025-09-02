@@ -1,43 +1,51 @@
-import { Building2 } from "lucide-react";
+import { Shield, ExternalLink } from "lucide-react";
+import { MenuCard } from "./MenuCard";
 
 interface SolutionsMenuProps {
   onClose: () => void;
-  onNHSClick: () => void;
+  onNavigate: (page: string) => void;
 }
 
-export const SolutionsMenu = ({ onClose, onNHSClick }: SolutionsMenuProps) => {
-  const handleNHSClick = () => {
-    onNHSClick();
+export const SolutionsMenu = ({ onClose, onNavigate }: SolutionsMenuProps) => {
+  const items = [
+    {
+      icon: Shield,
+      title: "NHS",
+      description: "Intelligent Automation Scheduling Platform",
+      page: "nhs"
+    },
+    {
+      icon: Shield,
+      title: "Unified Public Safety Portal",
+      description: "AI-powered platform for UK Police, Fire and Rescue Services",
+      page: "unified-public-safety"
+    }
+  ];
+
+  const handleItemClick = (page: string) => {
+    onNavigate(page);
     onClose();
   };
 
   return (
-    <div className="absolute top-full left-0 right-0 bg-card border-b border-border shadow-md z-50">
-      <div className="max-w-6xl mx-auto px-6 py-6">
-        <div className="space-y-3">
-          <button
-            onClick={handleNHSClick}
-            className="w-full flex items-start gap-3 p-3 rounded-lg hover:bg-accent transition-colors text-left group"
-          >
-            <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                <path d="M2 17l10 5 10-5"/>
-                <path d="M2 12l10 5 10-5"/>
-                <path d="M8 12v6"/>
-                <path d="M16 12v6"/>
-              </svg>
-            </div>
-            <div>
-              <div className="font-medium text-foreground group-hover:text-primary transition-colors">
-                NHS
-              </div>
-              <div className="text-sm text-muted-foreground mt-1">
-                Intelligent Automation Scheduling Platform
-              </div>
-            </div>
-          </button>
+    <div className="absolute top-full left-0 right-0 bg-popover rounded-lg shadow-xl border border-border p-6 animate-accordion-down z-50">
+      <div className="max-w-6xl mx-auto">
+        <div className="grid grid-cols-3 gap-4 mb-6">
+          {items.map((item) => (
+            <MenuCard
+              key={item.title}
+              icon={item.icon}
+              title={item.title}
+              description={item.description}
+              onClick={() => handleItemClick(item.page)}
+            />
+          ))}
         </div>
+        
+        <button className="flex items-center gap-2 border border-input rounded-md p-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+          See Documentation
+          <ExternalLink size={14} />
+        </button>
       </div>
     </div>
   );

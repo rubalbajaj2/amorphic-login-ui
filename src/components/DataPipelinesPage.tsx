@@ -15,53 +15,53 @@ export const DataPipelinesPage = ({ onLogout, onNavigate }: DataPipelinesPagePro
     {
       name: "workflow_dup_covid19",
       description: "Final Consumers reported as COVID-19 positive and Deaths by residence type.",
-      lastModifiedBy: "harsha",
+      lastModifiedBy: "admin",
       lastModified: "2024-10-17 12:59:44",
-      modifiedBy: "harsha"
+      modifiedBy: "admin"
     },
     {
       name: "workflow_covid19",
       description: "Final Consumers reported as COVID-19 positive and Deaths by residence type.",
-      lastModifiedBy: "harsha",
+      lastModifiedBy: "admin",
       lastModified: "2024-10-17 12:39:24",
-      modifiedBy: "harsha"
+      modifiedBy: "admin"
     },
     {
       name: "WF_Demo",
-      lastModifiedBy: "harsha",
+      lastModifiedBy: "admin",
       lastModified: "2023-08-14 08:06:15",
-      modifiedBy: "harsha"
+      modifiedBy: "admin"
     },
     {
       name: "Texas_DMV_Data_Pipeline",
       description: "Data pipeline for Texas department of transportation",
-      lastModifiedBy: "harsha",
+      lastModifiedBy: "admin",
       lastModified: "2025-07-29 09:37:22",
-      modifiedBy: "harsha"
+      modifiedBy: "admin"
     },
     {
       name: "sunbucks_data_pipeline",
-      lastModifiedBy: "harsha",
+      lastModifiedBy: "admin",
       lastModified: "2025-08-04 09:12:44",
-      modifiedBy: "harsha"
+      modifiedBy: "admin"
     },
     {
       name: "mississippi_data_pipeline",
       description: "Data pipeline for Mississippi state department",
-      lastModifiedBy: "harsha",
+      lastModifiedBy: "admin",
       lastModified: "2025-07-22 11:03:46",
-      modifiedBy: "harsha"
+      modifiedBy: "admin"
     },
     {
       name: "Immunization_System_WF",
       description: "Workflow for cleansing and standardizing raw immunization data from the Arkansas Immunization Information System.",
-      lastModifiedBy: "harsha", 
+      lastModifiedBy: "admin", 
       lastModified: "2024-10-18 08:25:05",
-      modifiedBy: "harsha"
+      modifiedBy: "admin"
     },
     {
       name: "Immunization_System_dup_WF",
-      lastModifiedBy: "harsha",
+      lastModifiedBy: "admin",
       lastModified: "",
       modifiedBy: ""
     }

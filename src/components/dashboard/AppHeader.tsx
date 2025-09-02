@@ -15,11 +15,10 @@ import {
 
 interface AppHeaderProps {
   onLogout: () => void;
-  onNHSClick?: () => void;
   onNavigate?: (page: string) => void;
 }
 
-export const AppHeader = ({ onLogout, onNHSClick, onNavigate }: AppHeaderProps) => {
+export const AppHeader = ({ onLogout, onNavigate }: AppHeaderProps) => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
 
   const toggleMenu = (menuName: string) => {
@@ -117,7 +116,9 @@ export const AppHeader = ({ onLogout, onNHSClick, onNavigate }: AppHeaderProps) 
       {activeMenu === 'discover' && <DiscoverMenu onClose={closeMenus} onNavigate={onNavigate || (() => {})} />}
       {activeMenu === 'explore' && <ExploreMenu onClose={closeMenus} onNavigate={onNavigate || (() => {})} />}
       {activeMenu === 'manage' && <ManageMenu onClose={closeMenus} onNavigate={onNavigate || (() => {})} />}
-      {activeMenu === 'solutions' && <SolutionsMenu onClose={closeMenus} onNHSClick={onNHSClick || (() => {})} />}
+      {activeMenu === 'solutions' && onNavigate && (
+        <SolutionsMenu onClose={closeMenus} onNavigate={onNavigate} />
+      )}
     </div>
   );
 };

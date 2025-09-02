@@ -3,14 +3,13 @@ import { DatasourcesContent } from "./dashboard/DatasourcesContent";
 
 interface DashboardPageProps {
   onLogout: () => void;
-  onNHSClick?: () => void;
   onNavigate?: (page: string) => void;
 }
 
-export const DashboardPage = ({ onLogout, onNHSClick, onNavigate }: DashboardPageProps) => {
+export const DashboardPage = ({ onLogout, onNavigate }: DashboardPageProps) => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <AppHeader onLogout={onLogout} onNHSClick={onNHSClick} onNavigate={onNavigate} />
+      <AppHeader onLogout={onLogout} onNavigate={onNavigate} />
       <DatasourcesContent />
     </div>
   );
