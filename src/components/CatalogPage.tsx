@@ -1,4 +1,8 @@
 import { AppHeader } from "./dashboard/AppHeader";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Search, Filter } from "lucide-react";
 
 interface CatalogPageProps {
   onLogout: () => void;
@@ -33,44 +37,65 @@ export const CatalogPage = ({ onLogout, onNavigate }: CatalogPageProps) => {
               
               {/* Search and Filter Controls */}
               <div className="flex items-center gap-4 mb-6">
-                <div className="flex-1 relative">
-                  <input 
-                    type="text" 
-                    placeholder="Search" 
-                    className="w-full pl-4 pr-4 py-2 border border-input rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input 
+                    placeholder="Search by Catalog Name" 
+                    className="pl-10 w-64"
                   />
                 </div>
-                <select className="px-4 py-2 border border-input rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary">
-                  <option>Filter by Target Location</option>
-                  <option>S3</option>
-                  <option>S3athena</option>
-                  <option>Redshift</option>
-                  <option>DynamoDB</option>
-                </select>
-                <select className="px-4 py-2 border border-input rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary">
-                  <option>Filter by File Type</option>
-                  <option>csv</option>
-                  <option>others</option>
-                  <option>parquet</option>
-                  <option>xlsx</option>
-                  <option>json</option>
-                  <option>pdf</option>
-                  <option>txt</option>
-                  <option>jpg</option>
-                  <option>wav</option>
-                  <option>png</option>
-                  <option>jpeg</option>
-                  <option>mp3</option>
-                </select>
-                <select className="px-4 py-2 border border-input rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary">
-                  <option>Filter by Domain</option>
-                  <option>demo</option>
-                  <option>Test1</option>
-                  <option>Test2</option>
-                </select>
-                <button className="bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90">
+                
+                <Select>
+                  <SelectTrigger className="w-48">
+                    <Filter className="h-4 w-4 mr-2" />
+                    <SelectValue placeholder="Filter by Target Location" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Locations</SelectItem>
+                    <SelectItem value="s3">S3</SelectItem>
+                    <SelectItem value="s3athena">S3athena</SelectItem>
+                    <SelectItem value="redshift">Redshift</SelectItem>
+                    <SelectItem value="dynamodb">DynamoDB</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Select>
+                  <SelectTrigger className="w-40">
+                    <SelectValue placeholder="Filter by File Type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Types</SelectItem>
+                    <SelectItem value="csv">csv</SelectItem>
+                    <SelectItem value="others">others</SelectItem>
+                    <SelectItem value="parquet">parquet</SelectItem>
+                    <SelectItem value="xlsx">xlsx</SelectItem>
+                    <SelectItem value="json">json</SelectItem>
+                    <SelectItem value="pdf">pdf</SelectItem>
+                    <SelectItem value="txt">txt</SelectItem>
+                    <SelectItem value="jpg">jpg</SelectItem>
+                    <SelectItem value="wav">wav</SelectItem>
+                    <SelectItem value="png">png</SelectItem>
+                    <SelectItem value="jpeg">jpeg</SelectItem>
+                    <SelectItem value="mp3">mp3</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Select>
+                  <SelectTrigger className="w-40">
+                    <SelectValue placeholder="Filter by Domain" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Domains</SelectItem>
+                    <SelectItem value="demo">demo</SelectItem>
+                    <SelectItem value="test1">Test1</SelectItem>
+                    <SelectItem value="test2">Test2</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Button variant="outline">
+                  <Filter className="h-4 w-4 mr-2" />
                   Advanced Filters
-                </button>
+                </Button>
               </div>
 
               {/* Tab Navigation */}
