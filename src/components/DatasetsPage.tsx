@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { AppHeader } from "./dashboard/AppHeader";
+import { CreateDatasetModal } from "./dashboard/CreateDatasetModal";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +14,8 @@ interface DatasetsPageProps {
 }
 
 export const DatasetsPage = ({ onLogout, onNavigate }: DatasetsPageProps) => {
+  const [isCreateDatasetModalOpen, setIsCreateDatasetModalOpen] = useState(false);
+  
   const datasets = [
     {
       name: "Work_Activity_Completion",
@@ -153,7 +157,10 @@ export const DatasetsPage = ({ onLogout, onNavigate }: DatasetsPageProps) => {
               <Button variant="outline" size="sm">
                 <Trash2 className="h-4 w-4" />
               </Button>
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+              <Button 
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
+                onClick={() => setIsCreateDatasetModalOpen(true)}
+              >
                 <Plus className="h-4 w-4 mr-2" />
                 Create Dataset
               </Button>
@@ -239,6 +246,12 @@ export const DatasetsPage = ({ onLogout, onNavigate }: DatasetsPageProps) => {
           </div>
         </div>
       </div>
+
+      {/* Create Dataset Modal */}
+      <CreateDatasetModal 
+        isOpen={isCreateDatasetModalOpen}
+        onClose={() => setIsCreateDatasetModalOpen(false)}
+      />
     </div>
   );
 };
