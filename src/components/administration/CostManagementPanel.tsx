@@ -1,8 +1,13 @@
 import { useState } from "react";
 import { RefreshCw } from "lucide-react";
+import { HighCostingResourcesTab } from "./HighCostingResourcesTab";
+import { CostTagsTab } from "./CostTagsTab";
+import { CostMetricsTab } from "./CostMetricsTab";
+import { BudgetsTab } from "./BudgetsTab";
 
 export const CostManagementPanel = () => {
   const [showAllServices, setShowAllServices] = useState(false);
+  const [activeTab, setActiveTab] = useState("usage");
 
   // Service data with unique colors
   const baseServices = [
@@ -41,11 +46,36 @@ export const CostManagementPanel = () => {
 
       {/* Tabs */}
       <div className="flex gap-6 mb-6 border-b border-border">
-        <button className="border-b-2 border-primary text-primary pb-2 text-sm font-medium">Usage & Billing</button>
-        <button className="text-muted-foreground pb-2 text-sm hover:text-foreground">High Costing Resources</button>
-        <button className="text-muted-foreground pb-2 text-sm hover:text-foreground">Cost Tags</button>
-        <button className="text-muted-foreground pb-2 text-sm hover:text-foreground">Cost Metrics</button>
-        <button className="text-muted-foreground pb-2 text-sm hover:text-foreground">Budgets</button>
+        <button 
+          onClick={() => setActiveTab("usage")}
+          className={`pb-2 text-sm font-medium ${activeTab === "usage" ? "border-b-2 border-primary text-primary" : "text-muted-foreground hover:text-foreground"}`}
+        >
+          Usage & Billing
+        </button>
+        <button 
+          onClick={() => setActiveTab("high-costing")}
+          className={`pb-2 text-sm font-medium ${activeTab === "high-costing" ? "border-b-2 border-primary text-primary" : "text-muted-foreground hover:text-foreground"}`}
+        >
+          High Costing Resources
+        </button>
+        <button 
+          onClick={() => setActiveTab("cost-tags")}
+          className={`pb-2 text-sm font-medium ${activeTab === "cost-tags" ? "border-b-2 border-primary text-primary" : "text-muted-foreground hover:text-foreground"}`}
+        >
+          Cost Tags
+        </button>
+        <button 
+          onClick={() => setActiveTab("cost-metrics")}
+          className={`pb-2 text-sm font-medium ${activeTab === "cost-metrics" ? "border-b-2 border-primary text-primary" : "text-muted-foreground hover:text-foreground"}`}
+        >
+          Cost Metrics
+        </button>
+        <button 
+          onClick={() => setActiveTab("budgets")}
+          className={`pb-2 text-sm font-medium ${activeTab === "budgets" ? "border-b-2 border-primary text-primary" : "text-muted-foreground hover:text-foreground"}`}
+        >
+          Budgets
+        </button>
       </div>
 
       {/* Billing Details */}
@@ -62,7 +92,7 @@ export const CostManagementPanel = () => {
           <div className="h-64 flex items-end justify-center gap-8">
             {/* Current Usage Bar */}
             <div className="flex flex-col items-center">
-              <div className="w-16 h-40 bg-primary rounded-t mb-2 relative">
+              <div className="w-24 h-40 bg-primary rounded-t mb-2 relative">
                 <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-xs text-foreground font-medium">
                   $126.49
                 </div>
@@ -72,9 +102,9 @@ export const CostManagementPanel = () => {
             
             {/* Estimated Usage Bar */}
             <div className="flex flex-col items-center">
-              <div className="w-16 h-32 bg-primary/40 rounded-t mb-2 relative">
+              <div className="w-24 h-48 bg-sky-300 rounded-t mb-2 relative">
                 <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-xs text-foreground font-medium">
-                  $98.23
+                  $250
                 </div>
               </div>
               <span className="text-xs text-muted-foreground">Estimated Usage</span>
@@ -87,7 +117,7 @@ export const CostManagementPanel = () => {
               <span className="text-sm text-foreground">Current Usage</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-primary/40 rounded"></div>
+              <div className="w-3 h-3 bg-sky-300 rounded"></div>
               <span className="text-sm text-foreground">Estimated Usage</span>
             </div>
           </div>
@@ -115,16 +145,19 @@ export const CostManagementPanel = () => {
 
         <div className="flex gap-6">
           {/* Pie Chart */}
-          <div className="flex-shrink-0">
-            <div className="w-48 h-48 relative">
+          <div className="flex-1">
+            <div className="w-80 h-80 mx-auto relative">
               <svg viewBox="0 0 100 100" className="w-full h-full">
                 {currentServices.map((service, index) => {
-                  let cumulativeOffset = 0;
+                  let cumulativeAngle = 0;
                   for (let i = 0; i < index; i++) {
-                    cumulativeOffset += (currentServices[i].cost / totalCost) * 157.08;
+                    cumulativeAngle += (currentServices[i].cost / totalCost) * 360;
                   }
                   
-                  const segmentLength = (service.cost / totalCost) * 157.08;
+                  const segmentAngle = (service.cost / totalCost) * 360;
+                  const circumference = 2 * Math.PI * 25;
+                  const segmentLength = (segmentAngle / 360) * circumference;
+                  const offset = (cumulativeAngle / 360) * circumference;
                   
                   return (
                     <circle
@@ -134,22 +167,25 @@ export const CostManagementPanel = () => {
                       r="25"
                       fill="none"
                       stroke={service.color}
-                      strokeWidth="20"
-                      strokeDasharray={`${segmentLength} 157.08`}
-                      strokeDashoffset={-cumulativeOffset}
+                      strokeWidth="15"
+                      strokeDasharray={`${segmentLength} ${circumference}`}
+                      strokeDashoffset={-offset}
                       transform="rotate(-90 50 50)"
+                      className="transition-all duration-300"
                     />
                   );
                 })}
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-12 h-12 bg-background rounded-full border border-border"></div>
+                <div className="w-16 h-16 bg-background rounded-full border border-border flex items-center justify-center">
+                  <span className="text-xs font-medium text-foreground">${totalCost.toFixed(0)}</span>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Service List */}
-          <div className="flex-1 max-w-md">
+          <div className="w-80 flex-shrink-0">
             <div className="bg-background border border-border rounded-lg overflow-hidden">
               <table className="w-full">
                 <thead className="bg-muted/50">
