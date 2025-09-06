@@ -181,7 +181,7 @@ export const CostManagementPanel = () => {
                   </svg>
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-16 h-16 bg-background rounded-full border border-border flex items-center justify-center">
-                      <span className="text-xs font-medium text-foreground">${totalCost.toFixed(0)}</span>
+                      <span className="text-xs font-medium text-foreground">$126</span>
                     </div>
                   </div>
                 </div>
