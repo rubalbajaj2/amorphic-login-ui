@@ -11,21 +11,21 @@ export const CostManagementPanel = () => {
 
   // Service data with unique colors
   const baseServices = [
-    { name: "Amazon QuickSight", cost: 28.08, color: "rgb(var(--primary-400))" },
-    { name: "Amazon Redshift", cost: 13.5, color: "rgb(var(--success-400))" },
-    { name: "Amazon Relational Database Service", cost: 11.88, color: "rgb(var(--secondary-600))" },
-    { name: "AWS Security Hub", cost: 10.8, color: "rgb(var(--gray-600))" },
-    { name: "Other Services", cost: 62.23, color: "rgb(var(--warning-400))" }
+    { name: "Amazon QuickSight", cost: 28.08, color: "#3B82F6" }, // Blue
+    { name: "Amazon Redshift", cost: 13.5, color: "#10B981" }, // Green
+    { name: "Amazon Relational Database Service", cost: 11.88, color: "#F59E0B" }, // Orange
+    { name: "AWS Security Hub", cost: 10.8, color: "#EF4444" }, // Red
+    { name: "Other Services", cost: 62.23, color: "#8B5CF6" } // Purple
   ];
 
   const additionalServices = [
-    { name: "Amazon EC2", cost: 45.67, color: "rgb(var(--error-400))" },
-    { name: "Amazon S3", cost: 23.45, color: "rgb(var(--primary-200))" },
-    { name: "AWS Lambda", cost: 18.92, color: "rgb(var(--success-200))" },
-    { name: "Amazon VPC", cost: 15.34, color: "rgb(var(--warning-200))" },
-    { name: "Amazon CloudWatch", cost: 12.78, color: "rgb(var(--secondary-400))" },
-    { name: "AWS IAM", cost: 8.56, color: "rgb(var(--gray-400))" },
-    { name: "Amazon Route 53", cost: 6.89, color: "rgb(var(--primary-300))" }
+    { name: "Amazon EC2", cost: 45.67, color: "#EC4899" }, // Pink
+    { name: "Amazon S3", cost: 23.45, color: "#06B6D4" }, // Cyan
+    { name: "AWS Lambda", cost: 18.92, color: "#84CC16" }, // Lime
+    { name: "Amazon VPC", cost: 15.34, color: "#F97316" }, // Orange
+    { name: "Amazon CloudWatch", cost: 12.78, color: "#6366F1" }, // Indigo
+    { name: "AWS IAM", cost: 8.56, color: "#14B8A6" }, // Teal
+    { name: "Amazon Route 53", cost: 6.89, color: "#A855F7" } // Violet
   ];
 
   const currentServices = showAllServices ? [...baseServices, ...additionalServices] : baseServices;
