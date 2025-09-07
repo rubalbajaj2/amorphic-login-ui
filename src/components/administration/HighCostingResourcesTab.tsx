@@ -2,15 +2,15 @@ import { RefreshCw } from "lucide-react";
 
 export const HighCostingResourcesTab = () => {
   const resourceData = [
-    { name: "Datalabs", cost: 45.6, color: "rgb(var(--primary-500))" },
-    { name: "Data Pipelines", cost: 23.4, color: "rgb(var(--success-500))" },
-    { name: "Interactive Sessions", cost: 18.9, color: "rgb(var(--secondary-600))" },
-    { name: "Datasources", cost: 15.2, color: "rgb(var(--warning-500))" },
-    { name: "Jobs", cost: 12.8, color: "rgb(var(--error-500))" },
-    { name: "Healthlake Stores", cost: 8.7, color: "rgb(var(--gray-600))" },
-    { name: "Datasource Entities", cost: 6.5, color: "rgb(var(--primary-300))" },
-    { name: "Omics Stores", cost: 4.3, color: "rgb(var(--success-300))" },
-    { name: "Omics Workflows", cost: 2.1, color: "rgb(var(--secondary-400))" }
+    { name: "Datalabs", cost: 45.6, color: "#3B82F6" },
+    { name: "Data Pipelines", cost: 23.4, color: "#10B981" },
+    { name: "Interactive Sessions", cost: 18.9, color: "#F59E0B" },
+    { name: "Datasources", cost: 15.2, color: "#EF4444" },
+    { name: "Jobs", cost: 12.8, color: "#8B5CF6" },
+    { name: "Healthlake Stores", cost: 8.7, color: "#EC4899" },
+    { name: "Datasource Entities", cost: 6.5, color: "#06B6D4" },
+    { name: "Omics Stores", cost: 4.3, color: "#84CC16" },
+    { name: "Omics Workflows", cost: 2.1, color: "#F97316" }
   ];
 
   const totalCost = resourceData.reduce((sum, resource) => sum + resource.cost, 0);
@@ -24,10 +24,10 @@ export const HighCostingResourcesTab = () => {
         </button>
       </div>
 
-      <div className="flex gap-8">
+      <div className="flex gap-6">
         {/* Pie Chart */}
         <div className="flex-1">
-          <div className="w-96 h-96 mx-auto relative">
+          <div className="w-80 h-80 mx-auto relative">
             <svg viewBox="0 0 100 100" className="w-full h-full">
               {resourceData.map((resource, index) => {
                 let cumulativeAngle = 0;
@@ -36,7 +36,7 @@ export const HighCostingResourcesTab = () => {
                 }
                 
                 const segmentAngle = (resource.cost / totalCost) * 360;
-                const circumference = 2 * Math.PI * 30;
+                const circumference = 2 * Math.PI * 25;
                 const segmentLength = (segmentAngle / 360) * circumference;
                 const offset = (cumulativeAngle / 360) * circumference;
                 
@@ -45,10 +45,10 @@ export const HighCostingResourcesTab = () => {
                     key={resource.name}
                     cx="50"
                     cy="50"
-                    r="30"
+                    r="25"
                     fill="none"
                     stroke={resource.color}
-                    strokeWidth="20"
+                    strokeWidth="15"
                     strokeDasharray={`${segmentLength} ${circumference}`}
                     strokeDashoffset={-offset}
                     transform="rotate(-90 50 50)"
@@ -58,26 +58,45 @@ export const HighCostingResourcesTab = () => {
               })}
             </svg>
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-20 h-20 bg-background rounded-full border border-border"></div>
+              <div className="w-16 h-16 bg-background rounded-full border border-border flex items-center justify-center">
+                <span className="text-xs font-medium text-foreground">${Math.round(totalCost)}</span>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Legend */}
+        {/* Service List */}
         <div className="w-80 flex-shrink-0">
-          <div className="grid grid-cols-3 gap-4">
-            {resourceData.map((resource) => (
-              <div key={resource.name} className="flex items-center gap-2">
-                <div 
-                  className="w-4 h-4 rounded" 
-                  style={{ backgroundColor: resource.color }}
-                ></div>
-                <div className="flex flex-col">
-                  <span className="text-sm font-medium text-foreground">{resource.name}</span>
-                  <span className="text-xs text-muted-foreground">${resource.cost}</span>
-                </div>
-              </div>
-            ))}
+          <div className="bg-background border border-border rounded-lg overflow-hidden">
+            <table className="w-full">
+              <thead className="bg-muted/50">
+                <tr>
+                  <th className="text-left p-3 text-sm font-medium text-foreground">Resource Name</th>
+                  <th className="text-right p-3 text-sm font-medium text-foreground">Cost(USD)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {resourceData.map((resource, index) => (
+                  <tr key={resource.name} className="border-t border-border">
+                    <td className="p-3">
+                      <div className="flex items-center gap-2">
+                        <div 
+                          className="w-3 h-3 rounded" 
+                          style={{ backgroundColor: resource.color }}
+                        ></div>
+                        <span className="text-sm text-foreground">{resource.name}</span>
+                      </div>
+                    </td>
+                    <td className="p-3 text-right text-sm text-foreground">{resource.cost.toFixed(2)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="mt-3 text-right">
+            <span className="text-sm font-medium text-foreground">
+              Total: ${totalCost.toFixed(2)}
+            </span>
           </div>
         </div>
       </div>

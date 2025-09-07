@@ -18,42 +18,81 @@ export const CostMetricsTab = () => {
             </div>
           </div>
           
-          <div className="flex justify-between items-center">
+          <div className="flex gap-6">
             {/* Pie Chart */}
-            <div className="w-40 h-40 relative">
-              <svg viewBox="0 0 100 100" className="w-full h-full">
-                <circle cx="50" cy="50" r="25" fill="none" stroke="rgb(var(--primary-500))" strokeWidth="20" strokeDasharray="60 157" transform="rotate(-90 50 50)" />
-                <circle cx="50" cy="50" r="25" fill="none" stroke="rgb(var(--success-500))" strokeWidth="20" strokeDasharray="40 157" strokeDashoffset="-60" transform="rotate(-90 50 50)" />
-                <circle cx="50" cy="50" r="25" fill="none" stroke="rgb(var(--warning-500))" strokeWidth="20" strokeDasharray="30 157" strokeDashoffset="-100" transform="rotate(-90 50 50)" />
-                <circle cx="50" cy="50" r="25" fill="none" stroke="rgb(var(--secondary-600))" strokeWidth="20" strokeDasharray="20 157" strokeDashoffset="-130" transform="rotate(-90 50 50)" />
-                <circle cx="50" cy="50" r="25" fill="none" stroke="rgb(var(--error-400))" strokeWidth="20" strokeDasharray="7 157" strokeDashoffset="-150" transform="rotate(-90 50 50)" />
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-8 h-8 bg-background rounded-full border border-border"></div>
+            <div className="flex-1">
+              <div className="w-40 h-40 mx-auto relative">
+                <svg viewBox="0 0 100 100" className="w-full h-full">
+                  <circle cx="50" cy="50" r="25" fill="none" stroke="#3B82F6" strokeWidth="15" strokeDasharray="60 157" transform="rotate(-90 50 50)" />
+                  <circle cx="50" cy="50" r="25" fill="none" stroke="#10B981" strokeWidth="15" strokeDasharray="40 157" strokeDashoffset="-60" transform="rotate(-90 50 50)" />
+                  <circle cx="50" cy="50" r="25" fill="none" stroke="#F59E0B" strokeWidth="15" strokeDasharray="30 157" strokeDashoffset="-100" transform="rotate(-90 50 50)" />
+                  <circle cx="50" cy="50" r="25" fill="none" stroke="#EF4444" strokeWidth="15" strokeDasharray="20 157" strokeDashoffset="-130" transform="rotate(-90 50 50)" />
+                  <circle cx="50" cy="50" r="25" fill="none" stroke="#8B5CF6" strokeWidth="15" strokeDasharray="7 157" strokeDashoffset="-150" transform="rotate(-90 50 50)" />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-8 h-8 bg-background rounded-full border border-border"></div>
+                </div>
               </div>
             </div>
 
             {/* Legend */}
-            <div className="flex flex-col gap-2 text-xs">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-primary rounded"></div>
-                <span className="text-foreground">Dept : Dept2</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-secondary-600 rounded"></div>
-                <span className="text-foreground">Dept : Dept1</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-warning-500 rounded"></div>
-                <span className="text-foreground">Dept : Dept3</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-error-400 rounded"></div>
-                <span className="text-foreground">Dept : Dept4</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-success-500 rounded"></div>
-                <span className="text-foreground">Untagged : Untagged</span>
+            <div className="w-48 flex-shrink-0">
+              <div className="bg-background border border-border rounded-lg overflow-hidden">
+                <table className="w-full">
+                  <thead className="bg-muted/50">
+                    <tr>
+                      <th className="text-left p-3 text-sm font-medium text-foreground">Department</th>
+                      <th className="text-right p-3 text-sm font-medium text-foreground">Cost</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-t border-border">
+                      <td className="p-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 rounded" style={{ backgroundColor: "#3B82F6" }}></div>
+                          <span className="text-sm text-foreground">Dept2</span>
+                        </div>
+                      </td>
+                      <td className="p-3 text-right text-sm text-foreground">$60</td>
+                    </tr>
+                    <tr className="border-t border-border">
+                      <td className="p-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 rounded" style={{ backgroundColor: "#10B981" }}></div>
+                          <span className="text-sm text-foreground">Untagged</span>
+                        </div>
+                      </td>
+                      <td className="p-3 text-right text-sm text-foreground">$40</td>
+                    </tr>
+                    <tr className="border-t border-border">
+                      <td className="p-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 rounded" style={{ backgroundColor: "#F59E0B" }}></div>
+                          <span className="text-sm text-foreground">Dept3</span>
+                        </div>
+                      </td>
+                      <td className="p-3 text-right text-sm text-foreground">$30</td>
+                    </tr>
+                    <tr className="border-t border-border">
+                      <td className="p-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 rounded" style={{ backgroundColor: "#EF4444" }}></div>
+                          <span className="text-sm text-foreground">Dept1</span>
+                        </div>
+                      </td>
+                      <td className="p-3 text-right text-sm text-foreground">$20</td>
+                    </tr>
+                    <tr className="border-t border-border">
+                      <td className="p-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 rounded" style={{ backgroundColor: "#8B5CF6" }}></div>
+                          <span className="text-sm text-foreground">Dept4</span>
+                        </div>
+                      </td>
+                      <td className="p-3 text-right text-sm text-foreground">$7</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
@@ -93,25 +132,21 @@ export const CostMetricsTab = () => {
               { date: "2025-09-01", values: [100, 0, 0, 0] }
             ].map((bar, index) => (
               <div key={bar.date} className="flex flex-col items-center">
-                <div className="flex flex-col w-12">
-                  {bar.values.map((value, idx) => {
-                    const colors = ["rgb(var(--primary-500))", "rgb(var(--success-500))", "rgb(var(--warning-500))", "rgb(var(--error-400))"];
-                    const height = (value / 2500) * 160;
-                    return (
-                      <div 
-                        key={idx}
-                        className="w-full"
-                        style={{ 
-                          height: `${height}px`, 
-                          backgroundColor: colors[idx] 
-                        }}
-                      />
-                    );
-                  })}
-                </div>
-                <span className="text-xs text-muted-foreground mt-2 transform -rotate-45 origin-left">
-                  {bar.date}
-                </span>
+                  <div className="flex flex-col w-12">
+                    {bar.values.map((value, idx) => {
+                      const height = (value / 2500) * 160;
+                      return (
+                        <div 
+                          key={idx}
+                          className="w-full bg-primary"
+                          style={{ height: `${height}px` }}
+                        />
+                      );
+                    })}
+                  </div>
+                  <span className="text-xs text-muted-foreground mt-2">
+                    {new Date(bar.date).toLocaleDateString('en-US', { month: 'short', year: '2-digit' })}
+                  </span>
               </div>
             ))}
           </div>
@@ -145,8 +180,8 @@ export const CostMetricsTab = () => {
                   className="w-12 bg-primary rounded-t"
                   style={{ height: `${(bar.value / 50) * 160}px` }}
                 />
-                <span className="text-xs text-muted-foreground mt-2 transform -rotate-45 origin-left">
-                  {bar.date}
+                <span className="text-xs text-muted-foreground mt-2">
+                  {new Date(bar.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                 </span>
               </div>
             ))}
@@ -177,31 +212,21 @@ export const CostMetricsTab = () => {
               { date: "2025-05-01", values: [1300, 270, 220, 170, 110] }
             ].map((bar, index) => (
               <div key={bar.date} className="flex flex-col items-center">
-                <div className="flex flex-col w-12">
-                  {bar.values.map((value, idx) => {
-                    const colors = [
-                      "rgb(var(--primary-500))", 
-                      "rgb(var(--success-500))", 
-                      "rgb(var(--warning-500))", 
-                      "rgb(var(--error-400))",
-                      "rgb(var(--secondary-500))"
-                    ];
-                    const height = (value / 1500) * 160;
-                    return (
-                      <div 
-                        key={idx}
-                        className="w-full"
-                        style={{ 
-                          height: `${height}px`, 
-                          backgroundColor: colors[idx] 
-                        }}
-                      />
-                    );
-                  })}
-                </div>
-                <span className="text-xs text-muted-foreground mt-2 transform -rotate-45 origin-left">
-                  {bar.date}
-                </span>
+                  <div className="flex flex-col w-12">
+                    {bar.values.map((value, idx) => {
+                      const height = (value / 1500) * 160;
+                      return (
+                        <div 
+                          key={idx}
+                          className="w-full bg-primary"
+                          style={{ height: `${height}px` }}
+                        />
+                      );
+                    })}
+                  </div>
+                  <span className="text-xs text-muted-foreground mt-2">
+                    {new Date(bar.date).toLocaleDateString('en-US', { month: 'short', year: '2-digit' })}
+                  </span>
               </div>
             ))}
           </div>

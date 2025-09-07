@@ -9,26 +9,26 @@ export const CostManagementPanel = () => {
   const [showAllServices, setShowAllServices] = useState(false);
   const [activeTab, setActiveTab] = useState("usage");
 
-  // Service data with unique colors
-  const baseServices = [
+  // Service data with unique colors - showing top 4 by default
+  const topServices = [
     { name: "Amazon QuickSight", cost: 28.08, color: "#3B82F6" }, // Blue
     { name: "Amazon Redshift", cost: 13.5, color: "#10B981" }, // Green
     { name: "Amazon Relational Database Service", cost: 11.88, color: "#F59E0B" }, // Orange
-    { name: "AWS Security Hub", cost: 10.8, color: "#EF4444" }, // Red
-    { name: "Other Services", cost: 62.23, color: "#8B5CF6" } // Purple
+    { name: "AWS Security Hub", cost: 10.8, color: "#EF4444" } // Red
   ];
 
-  const additionalServices = [
+  const allServices = [
     { name: "Amazon EC2", cost: 45.67, color: "#EC4899" }, // Pink
     { name: "Amazon S3", cost: 23.45, color: "#06B6D4" }, // Cyan
     { name: "AWS Lambda", cost: 18.92, color: "#84CC16" }, // Lime
     { name: "Amazon VPC", cost: 15.34, color: "#F97316" }, // Orange
     { name: "Amazon CloudWatch", cost: 12.78, color: "#6366F1" }, // Indigo
     { name: "AWS IAM", cost: 8.56, color: "#14B8A6" }, // Teal
-    { name: "Amazon Route 53", cost: 6.89, color: "#A855F7" } // Violet
+    { name: "Amazon Route 53", cost: 6.89, color: "#A855F7" }, // Violet
+    ...topServices
   ];
 
-  const currentServices = showAllServices ? [...baseServices, ...additionalServices] : baseServices;
+  const currentServices = showAllServices ? allServices : topServices;
   const totalCost = currentServices.reduce((sum, service) => sum + service.cost, 0);
 
   return (
@@ -97,7 +97,7 @@ export const CostManagementPanel = () => {
                 <div className="flex flex-col items-center">
                   <div className="w-24 h-40 bg-primary rounded-t mb-2 relative">
                     <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-xs text-foreground font-medium">
-                      $126.49
+                      $198.49
                     </div>
                   </div>
                   <span className="text-xs text-muted-foreground">Current Usage</span>
@@ -105,7 +105,7 @@ export const CostManagementPanel = () => {
                 
                 {/* Estimated Usage Bar */}
                 <div className="flex flex-col items-center">
-                  <div className="w-24 h-48 bg-sky-300 rounded-t mb-2 relative">
+                  <div className="w-24 h-48 bg-primary/60 rounded-t mb-2 relative">
                     <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-xs text-foreground font-medium">
                       $250
                     </div>
@@ -120,7 +120,7 @@ export const CostManagementPanel = () => {
                   <span className="text-sm text-foreground">Current Usage</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-sky-300 rounded"></div>
+                  <div className="w-3 h-3 bg-primary/60 rounded"></div>
                   <span className="text-sm text-foreground">Estimated Usage</span>
                 </div>
               </div>
@@ -181,7 +181,7 @@ export const CostManagementPanel = () => {
                   </svg>
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-16 h-16 bg-background rounded-full border border-border flex items-center justify-center">
-                      <span className="text-xs font-medium text-foreground">$126</span>
+                      <span className="text-xs font-medium text-foreground">${Math.round(totalCost)}</span>
                     </div>
                   </div>
                 </div>
