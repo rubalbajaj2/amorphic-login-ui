@@ -137,7 +137,7 @@ export const CostMetricsTab = () => {
           </div>
           
           {/* Stacked Bar Chart */}
-          <div className="h-48 flex items-end justify-center gap-3">
+          <div className="h-64 flex items-end justify-center gap-3">
             {[
               { date: "2025-05-01", values: [1800, 200, 100, 50] },
               { date: "2025-06-01", values: [1700, 250, 150, 80] },
