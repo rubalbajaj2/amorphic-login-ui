@@ -1,10 +1,9 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { X, ChevronUp, ChevronDown, HelpCircle, Upload } from "lucide-react";
+import { X, ChevronUp, ChevronDown, HelpCircle, Upload, Brain, Plus } from "lucide-react";
 import { useState } from "react";
 
 interface CreateCustomModelModalProps {
@@ -15,110 +14,142 @@ interface CreateCustomModelModalProps {
 export const CreateCustomModelModal = ({ open, onOpenChange }: CreateCustomModelModalProps) => {
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
 
+  if (!open) return null;
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-          <DialogTitle className="text-xl font-semibold">Create Custom Model</DialogTitle>
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={() => onOpenChange(false)}
-            className="h-8 w-8 p-0"
-          >
-            <X className="h-4 w-4" />
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/50" onClick={() => onOpenChange(false)} />
+      
+      {/* Pop-up Modal */}
+      <div className="relative bg-card rounded-lg shadow-xl p-6 max-w-2xl w-full mx-4 max-h-[90vh] flex flex-col animate-scale-in">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <Brain size={20} className="text-primary" />
+              <Plus size={12} className="text-primary" />
+            </div>
+            <div>
+              <h2 className="font-semibold text-foreground">Create Custom Model</h2>
+              <p className="text-sm text-muted-foreground">Setup a new custom model</p>
+            </div>
+          </div>
+          <Button variant="ghost" size="icon" onClick={() => onOpenChange(false)}>
+            <X size={20} />
           </Button>
-        </DialogHeader>
+        </div>
 
         <div className="text-right mb-4">
-          <span className="text-sm text-error-500">* Required</span>
+          <span className="text-sm text-destructive">* Required</span>
         </div>
 
-        <div className="space-y-6">
-          {/* Model Name */}
-          <div className="space-y-2">
-            <Label className="text-sm font-medium text-foreground">
-              Model Name <HelpCircle className="inline h-4 w-4 ml-1" /> <span className="text-error-500">*</span>
-            </Label>
-            <Input className="w-full border-b-2 border-b-primary border-t-0 border-l-0 border-r-0 rounded-none focus:border-b-primary" />
-          </div>
+        {/* Form */}
+        <div className="flex-1 overflow-y-auto">
+          <div className="space-y-6">
+            {/* Section Title */}
+            <div>
+              <h3 className="font-medium text-foreground mb-1">Model Configuration details</h3>
+              <p className="text-sm text-muted-foreground">Enter model details</p>
+            </div>
 
-          {/* Description */}
-          <div className="space-y-2">
-            <Label className="text-sm font-medium text-foreground">
-              Description <HelpCircle className="inline h-4 w-4 ml-1" />
-            </Label>
-            <Input className="w-full border-b-2 border-b-muted-foreground border-t-0 border-l-0 border-r-0 rounded-none" />
-          </div>
-
-          {/* Advanced Section */}
-          <Collapsible open={isAdvancedOpen} onOpenChange={setIsAdvancedOpen}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-muted/50 rounded-lg hover:bg-muted/70 transition-colors">
-              <span className="font-medium text-foreground">Advanced</span>
-              {isAdvancedOpen ? (
-                <ChevronUp className="h-4 w-4" />
-              ) : (
-                <ChevronDown className="h-4 w-4" />
-              )}
-            </CollapsibleTrigger>
-            <CollapsibleContent className="space-y-6 pt-6">
-              {/* Customization Type */}
-              <div className="space-y-2">
-                <Label className="text-sm font-medium text-foreground">
-                  Customization Type <HelpCircle className="inline h-4 w-4 ml-1" /> <span className="text-error-500">*</span>
+            {/* Form Fields */}
+            <div className="space-y-4">
+              {/* Model Name */}
+              <div>
+                <Label htmlFor="modelName">
+                  Model Name <HelpCircle className="inline h-4 w-4 ml-1" /> <span className="text-destructive">*</span>
                 </Label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="fine-tuning">Fine tuning</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Input
+                  id="modelName"
+                  placeholder="Enter model name"
+                />
               </div>
 
-              {/* Upload Training Data */}
-              <div className="space-y-2">
-                <Label className="text-sm font-medium text-foreground">
-                  Upload Training Data <span className="text-error-500">*</span>
+              {/* Description */}
+              <div>
+                <Label htmlFor="description">
+                  Description <HelpCircle className="inline h-4 w-4 ml-1" />
                 </Label>
-                <div className="border-2 border-dashed border-muted-foreground rounded-lg p-8 text-center bg-muted/20">
-                  <Upload className="mx-auto h-8 w-8 text-muted-foreground mb-4" />
-                  <p className="text-muted-foreground mb-2">
-                    <Button variant="outline" className="mr-2">Upload</Button>
-                    or drag and drop
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    Accepted file type - .jsonl
-                  </p>
-                </div>
+                <Input
+                  id="description"
+                  placeholder="Enter description"
+                />
               </div>
 
-              {/* Upload Validation Data */}
-              <div className="space-y-2">
-                <Label className="text-sm font-medium text-foreground">Upload Validation Data</Label>
-                <div className="border-2 border-dashed border-muted-foreground rounded-lg p-8 text-center bg-muted/20">
-                  <Upload className="mx-auto h-8 w-8 text-muted-foreground mb-4" />
-                  <p className="text-muted-foreground mb-2">
-                    <Button variant="outline" className="mr-2">Upload</Button>
-                    or drag and drop
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    Accepted file type - .jsonl
-                  </p>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+              {/* Advanced Section */}
+              <Collapsible open={isAdvancedOpen} onOpenChange={setIsAdvancedOpen}>
+                <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-muted/50 rounded-lg hover:bg-muted/70 transition-colors">
+                  <span className="font-medium text-foreground">Advanced</span>
+                  {isAdvancedOpen ? (
+                    <ChevronUp className="h-4 w-4" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4" />
+                  )}
+                </CollapsibleTrigger>
+                <CollapsibleContent className="space-y-4 pt-4">
+                  {/* Customization Type */}
+                  <div>
+                    <Label htmlFor="customizationType">
+                      Customization Type <HelpCircle className="inline h-4 w-4 ml-1" /> <span className="text-destructive">*</span>
+                    </Label>
+                    <Select>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select customization type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="fine-tuning">Fine tuning</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-          {/* Create Model Button */}
-          <div className="flex justify-end pt-4">
-            <Button className="bg-white text-muted-foreground border border-muted-foreground hover:bg-muted/50">
-              Create Model
-            </Button>
+                  {/* Upload Training Data */}
+                  <div>
+                    <Label htmlFor="trainingData">
+                      Upload Training Data <span className="text-destructive">*</span>
+                    </Label>
+                    <div className="border-2 border-dashed border-muted-foreground rounded-lg p-8 text-center bg-muted/20">
+                      <Upload className="mx-auto h-8 w-8 text-muted-foreground mb-4" />
+                      <p className="text-muted-foreground mb-2">
+                        <Button variant="outline" className="mr-2">Upload</Button>
+                        or drag and drop
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Accepted file type - .jsonl
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Upload Validation Data */}
+                  <div>
+                    <Label htmlFor="validationData">Upload Validation Data</Label>
+                    <div className="border-2 border-dashed border-muted-foreground rounded-lg p-8 text-center bg-muted/20">
+                      <Upload className="mx-auto h-8 w-8 text-muted-foreground mb-4" />
+                      <p className="text-muted-foreground mb-2">
+                        <Button variant="outline" className="mr-2">Upload</Button>
+                        or drag and drop
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Accepted file type - .jsonl
+                      </p>
+                    </div>
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
+            </div>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+
+        {/* Footer */}
+        <div className="flex justify-end gap-2 pt-6 border-t">
+          <Button variant="outline" onClick={() => onOpenChange(false)}>
+            Cancel
+          </Button>
+          <Button onClick={() => onOpenChange(false)}>
+            Create Model
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 };

@@ -3,7 +3,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Search, ExternalLink, Grid3X3, Plus, HelpCircle, Settings } from "lucide-react";
+import { Search, ExternalLink, Grid3X3, Plus, HelpCircle, Settings, MessageSquare } from "lucide-react";
 
 interface AppsPageProps {
   onLogout: () => void;
@@ -30,7 +30,7 @@ export const AppsPage = ({ onLogout, onNavigate }: AppsPageProps) => {
     {
       name: "AI Chatbot Application",
       type: "AI",
-      icon: "🤖"
+      icon: <MessageSquare className="h-5 w-5 text-primary" />
     }
   ];
 
@@ -110,14 +110,18 @@ export const AppsPage = ({ onLogout, onNavigate }: AppsPageProps) => {
               <TableBody>
                 {apps.map((app, index) => (
                   <TableRow key={index} className="hover:bg-muted/50">
-                    <TableCell>
-                      <div className="flex items-center gap-3">
-                        <span className="text-lg">{app.icon}</span>
-                      <div>
-                        <div className="font-medium text-foreground">{app.name}</div>
-                      </div>
-                      </div>
-                    </TableCell>
+                     <TableCell>
+                       <div className="flex items-center gap-3">
+                         {typeof app.icon === 'string' ? (
+                           <span className="text-lg">{app.icon}</span>
+                         ) : (
+                           app.icon
+                         )}
+                       <div>
+                         <div className="font-medium text-foreground">{app.name}</div>
+                       </div>
+                       </div>
+                     </TableCell>
                     <TableCell className="text-muted-foreground">{app.type}</TableCell>
                     <TableCell>
                       <Button 

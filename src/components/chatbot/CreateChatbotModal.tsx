@@ -1,4 +1,3 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -6,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { X, ChevronUp, ChevronDown } from "lucide-react";
+import { X, ChevronUp, ChevronDown, Bot, Plus } from "lucide-react";
 import { useState } from "react";
 
 interface CreateChatbotModalProps {
@@ -17,132 +16,165 @@ interface CreateChatbotModalProps {
 export const CreateChatbotModal = ({ open, onOpenChange }: CreateChatbotModalProps) => {
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
 
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-          <DialogTitle className="text-xl font-semibold">Create Chatbot</DialogTitle>
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            onClick={() => onOpenChange(false)}
-            className="h-8 w-8 p-0"
-          >
-            <X className="h-4 w-4" />
-          </Button>
-        </DialogHeader>
+  if (!open) return null;
 
-        <div className="text-right mb-4">
-          <span className="text-sm text-error-500">* Required</span>
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/50" onClick={() => onOpenChange(false)} />
+      
+      {/* Pop-up Modal */}
+      <div className="relative bg-card rounded-lg shadow-xl p-6 max-w-2xl w-full mx-4 max-h-[90vh] flex flex-col animate-scale-in">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <Bot size={20} className="text-primary" />
+              <Plus size={12} className="text-primary" />
+            </div>
+            <div>
+              <h2 className="font-semibold text-foreground">Create New Chatbot</h2>
+              <p className="text-sm text-muted-foreground">Setup a new chatbot</p>
+            </div>
+          </div>
+          <Button variant="ghost" size="icon" onClick={() => onOpenChange(false)}>
+            <X size={20} />
+          </Button>
         </div>
 
-        <div className="space-y-6">
-          {/* Chatbot Name */}
-          <div className="space-y-2">
-            <Label className="text-sm font-medium text-foreground">
-              Chatbot Name <span className="text-error-500">*</span>
-            </Label>
-            <Input className="w-full border-b-2 border-b-primary border-t-0 border-l-0 border-r-0 rounded-none focus:border-b-primary" />
-          </div>
+        <div className="text-right mb-4">
+          <span className="text-sm text-destructive">* Required</span>
+        </div>
 
-          {/* Description and Keywords */}
-          <div className="grid grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <Label className="text-sm font-medium text-foreground">Description</Label>
-              <Input className="w-full border-b-2 border-b-muted-foreground border-t-0 border-l-0 border-r-0 rounded-none" />
+        {/* Form */}
+        <div className="flex-1 overflow-y-auto">
+          <div className="space-y-6">
+            {/* Section Title */}
+            <div>
+              <h3 className="font-medium text-foreground mb-1">Chatbot Configuration details</h3>
+              <p className="text-sm text-muted-foreground">Enter chatbot details</p>
             </div>
-            <div className="space-y-2">
-              <Label className="text-sm font-medium text-foreground">Keywords</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="keyword1">Keyword 1</SelectItem>
-                  <SelectItem value="keyword2">Keyword 2</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
 
-          {/* Advanced Section */}
-          <Collapsible open={isAdvancedOpen} onOpenChange={setIsAdvancedOpen}>
-            <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-muted/50 rounded-lg hover:bg-muted/70 transition-colors">
-              <span className="font-medium text-foreground">Advanced</span>
-              {isAdvancedOpen ? (
-                <ChevronUp className="h-4 w-4" />
-              ) : (
-                <ChevronDown className="h-4 w-4" />
-              )}
-            </CollapsibleTrigger>
-            <CollapsibleContent className="space-y-6 pt-6">
-              {/* Workspace */}
-              <div className="space-y-2">
-                <Label className="text-sm font-medium text-foreground">
-                  🔄 Workspace <span className="text-error-500">*</span>
+            {/* Form Fields */}
+            <div className="space-y-4">
+              {/* Chatbot Name */}
+              <div>
+                <Label htmlFor="chatbotName">
+                  Chatbot Name <span className="text-destructive">*</span>
                 </Label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="demo">Demo</SelectItem>
-                    <SelectItem value="test1">Test1</SelectItem>
-                    <SelectItem value="test2">Test2</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Model */}
-              <div className="space-y-2">
-                <Label className="text-sm font-medium text-foreground">
-                  Model <span className="text-error-500">*</span>
-                </Label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="gpt-4">GPT-4</SelectItem>
-                    <SelectItem value="gpt-3.5-turbo">GPT-3.5 Turbo</SelectItem>
-                    <SelectItem value="claude-3-sonnet">Claude 3 Sonnet</SelectItem>
-                    <SelectItem value="claude-3-haiku">Claude 3 Haiku</SelectItem>
-                    <SelectItem value="gemini-pro">Gemini Pro</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Instructions */}
-              <div className="space-y-2">
-                <Label className="text-sm font-medium text-foreground">Instructions</Label>
-                <Textarea 
-                  placeholder="Enter instructions for the chatbot..."
-                  className="min-h-[100px] resize-none border-b-2 border-b-muted-foreground border-t-0 border-l-0 border-r-0 rounded-none"
+                <Input
+                  id="chatbotName"
+                  placeholder="Enter chatbot name"
                 />
               </div>
 
-              {/* Switches */}
-              <div className="grid grid-cols-2 gap-6">
-                <div className="flex items-center justify-between">
-                  <Label className="text-sm font-medium text-foreground">Keep Active</Label>
-                  <Switch defaultChecked />
+              {/* Description and Keywords */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="description">Description</Label>
+                  <Input
+                    id="description"
+                    placeholder="Enter description"
+                  />
                 </div>
-                <div className="flex items-center justify-between">
-                  <Label className="text-sm font-medium text-foreground">Enable Redaction</Label>
-                  <Switch />
+                <div>
+                  <Label htmlFor="keywords">Keywords</Label>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select keywords" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="keyword1">Keyword 1</SelectItem>
+                      <SelectItem value="keyword2">Keyword 2</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
-            </CollapsibleContent>
-          </Collapsible>
 
-          {/* Create Chatbot Button */}
-          <div className="flex justify-end pt-4">
-            <Button className="bg-white text-muted-foreground border border-muted-foreground hover:bg-muted/50">
-              Create Chatbot
-            </Button>
+              {/* Advanced Section */}
+              <Collapsible open={isAdvancedOpen} onOpenChange={setIsAdvancedOpen}>
+                <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-muted/50 rounded-lg hover:bg-muted/70 transition-colors">
+                  <span className="font-medium text-foreground">Advanced</span>
+                  {isAdvancedOpen ? (
+                    <ChevronUp className="h-4 w-4" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4" />
+                  )}
+                </CollapsibleTrigger>
+                <CollapsibleContent className="space-y-4 pt-4">
+                  {/* Workspace */}
+                  <div>
+                    <Label htmlFor="workspace">
+                      Workspaces <span className="text-destructive">*</span>
+                    </Label>
+                    <Select>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select workspace" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="demo">Demo</SelectItem>
+                        <SelectItem value="test1">Test1</SelectItem>
+                        <SelectItem value="test2">Test2</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Model */}
+                  <div>
+                    <Label htmlFor="model">
+                      Model <span className="text-destructive">*</span>
+                    </Label>
+                    <Select>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select model" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="gpt-4">GPT-4</SelectItem>
+                        <SelectItem value="claude-3">Claude 3</SelectItem>
+                        <SelectItem value="gemini-pro">Gemini Pro</SelectItem>
+                        <SelectItem value="llama-2">Llama 2</SelectItem>
+                        <SelectItem value="palm-2">PaLM 2</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Instructions */}
+                  <div>
+                    <Label htmlFor="instructions">Instructions</Label>
+                    <Textarea 
+                      id="instructions"
+                      placeholder="Enter instructions for the chatbot..."
+                      className="min-h-[100px] resize-none"
+                    />
+                  </div>
+
+                  {/* Switches */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="flex items-center justify-between">
+                      <Label className="text-sm font-medium text-foreground">Keep Active</Label>
+                      <Switch defaultChecked />
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <Label className="text-sm font-medium text-foreground">Enable Redaction</Label>
+                      <Switch />
+                    </div>
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
+            </div>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+
+        {/* Footer */}
+        <div className="flex justify-end gap-2 pt-6 border-t">
+          <Button variant="outline" onClick={() => onOpenChange(false)}>
+            Cancel
+          </Button>
+          <Button onClick={() => onOpenChange(false)}>
+            Create Chatbot
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 };
