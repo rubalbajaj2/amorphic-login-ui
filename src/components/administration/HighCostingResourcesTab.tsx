@@ -27,7 +27,7 @@ export const HighCostingResourcesTab = () => {
       <div className="flex gap-6">
         {/* Pie Chart */}
         <div className="flex-1">
-          <div className="w-80 h-80 mx-auto relative">
+          <div className="w-96 h-96 mx-auto relative">
             <svg viewBox="0 0 100 100" className="w-full h-full">
               {resourceData.map((resource, index) => {
                 let cumulativeAngle = 0;
@@ -52,8 +52,10 @@ export const HighCostingResourcesTab = () => {
                     strokeDasharray={`${segmentLength} ${circumference}`}
                     strokeDashoffset={-offset}
                     transform="rotate(-90 50 50)"
-                    className="transition-all duration-300"
-                  />
+                    className="transition-all duration-300 hover:opacity-80 cursor-pointer"
+                  >
+                    <title>{resource.name}: ${resource.cost.toFixed(2)}</title>
+                  </circle>
                 );
               })}
             </svg>

@@ -105,7 +105,7 @@ export const CostManagementPanel = () => {
                 
                 {/* Estimated Usage Bar */}
                 <div className="flex flex-col items-center">
-                  <div className="w-24 h-48 bg-primary/60 rounded-t mb-2 relative">
+                  <div className="w-24 h-48 bg-blue-400 rounded-t mb-2 relative">
                     <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-xs text-foreground font-medium">
                       $250
                     </div>
@@ -120,7 +120,7 @@ export const CostManagementPanel = () => {
                   <span className="text-sm text-foreground">Current Usage</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-primary/60 rounded"></div>
+                  <div className="w-3 h-3 bg-blue-400 rounded"></div>
                   <span className="text-sm text-foreground">Estimated Usage</span>
                 </div>
               </div>
@@ -174,8 +174,10 @@ export const CostManagementPanel = () => {
                           strokeDasharray={`${segmentLength} ${circumference}`}
                           strokeDashoffset={-offset}
                           transform="rotate(-90 50 50)"
-                          className="transition-all duration-300"
-                        />
+                          className="transition-all duration-300 hover:opacity-80 cursor-pointer"
+                        >
+                          <title>{service.name}: ${service.cost.toFixed(2)}</title>
+                        </circle>
                       );
                     })}
                   </svg>
