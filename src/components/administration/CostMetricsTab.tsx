@@ -81,7 +81,7 @@ export const CostMetricsTab = () => {
             </div>
 
             {/* Legend */}
-            <div className="w-36 flex-shrink-0 ml-2">
+            <div className="w-36 flex-shrink-0">
               <div className="bg-background overflow-hidden">
                 <table className="w-full">
                   <thead>
