@@ -13,26 +13,22 @@ interface AppsPageProps {
 export const AppsPage = ({ onLogout, onNavigate }: AppsPageProps) => {
   const apps = [
     {
-      name: "cdap-trace",
-      description: "TRACE Application",
+      name: "TRACE Application",
       type: "TRACE",
       icon: "📊"
     },
     {
-      name: "cdap-idp",
-      description: "Intelligent Document Processing Application",
+      name: "Intelligent Document Processing Application",
       type: "IDP",
       icon: "📄"
     },
     {
-      name: "cdap-bi",
-      description: "BI Application",
+      name: "BI Application",
       type: "BI",
       icon: "📈"
     },
     {
-      name: "cdap-ai",
-      description: "AI Chatbot Application",
+      name: "AI Chatbot Application",
       type: "AI",
       icon: "🤖"
     }
@@ -117,15 +113,23 @@ export const AppsPage = ({ onLogout, onNavigate }: AppsPageProps) => {
                     <TableCell>
                       <div className="flex items-center gap-3">
                         <span className="text-lg">{app.icon}</span>
-                        <div>
-                          <div className="font-medium text-foreground">{app.name}</div>
-                          <div className="text-sm text-muted-foreground">{app.description}</div>
-                        </div>
+                      <div>
+                        <div className="font-medium text-foreground">{app.name}</div>
+                      </div>
                       </div>
                     </TableCell>
                     <TableCell className="text-muted-foreground">{app.type}</TableCell>
                     <TableCell>
-                      <Button variant="outline" size="sm" className="text-primary hover:text-primary">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="text-primary hover:text-primary"
+                        onClick={() => {
+                          if (app.name === "AI Chatbot Application") {
+                            onNavigate('ai-chatbot');
+                          }
+                        }}
+                      >
                         Go To App
                       </Button>
                     </TableCell>

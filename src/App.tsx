@@ -20,11 +20,12 @@ import { DataPipelinesPage } from "./components/DataPipelinesPage";
 import { AppsPage } from "./components/AppsPage";
 import { PlaygroundPage } from "./components/PlaygroundPage";
 import { DataLabsPage } from "./components/DataLabsPage";
+import { AIChatbotPage } from "./components/AIChatbotPage";
 import { useToast } from "@/hooks/use-toast";
 
 const queryClient = new QueryClient();
 
-type PageType = 'dashboard' | 'nhs' | 'administration' | 'catalog' | 'datasets' | 'glossaries' | 'hcls' | 'shared-resources' | 'etl-jobs' | 'data-pipelines' | 'apps' | 'playground' | 'data-labs' | 'unified-public-safety' | 'local-council' | 'fraud-analysis';
+type PageType = 'dashboard' | 'nhs' | 'administration' | 'catalog' | 'datasets' | 'glossaries' | 'hcls' | 'shared-resources' | 'etl-jobs' | 'data-pipelines' | 'apps' | 'playground' | 'data-labs' | 'unified-public-safety' | 'local-council' | 'fraud-analysis' | 'ai-chatbot';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -97,6 +98,8 @@ const App = () => {
         return <PlaygroundPage {...commonProps} />;
       case 'data-labs':
         return <DataLabsPage {...commonProps} />;
+      case 'ai-chatbot':
+        return <AIChatbotPage {...commonProps} />;
       default:
         return <DashboardPage onLogout={handleLogout} onNavigate={handleNavigate} />;
     }
