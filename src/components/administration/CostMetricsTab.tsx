@@ -81,28 +81,28 @@ export const CostMetricsTab = () => {
             </div>
 
             {/* Legend */}
-            <div className="w-48 flex-shrink-0">
-              <div className="bg-background border border-border rounded-lg overflow-hidden">
+            <div className="w-36 flex-shrink-0 ml-2">
+              <div className="bg-background overflow-hidden">
                 <table className="w-full">
-                  <thead className="bg-muted/50">
+                  <thead>
                     <tr>
-                      <th className="text-left p-3 text-sm font-medium text-foreground">Department</th>
-                      <th className="text-right p-3 text-sm font-medium text-foreground">Cost</th>
+                      <th className="text-left p-2 text-xs font-medium text-foreground">Department</th>
+                      <th className="text-right p-2 text-xs font-medium text-foreground">Cost</th>
                     </tr>
                   </thead>
                   <tbody>
                     {departmentData.map((dept, index) => (
-                      <tr key={dept.name} className="border-t border-border">
-                        <td className="p-3">
-                          <div className="flex items-center gap-2">
+                      <tr key={dept.name}>
+                        <td className="p-2">
+                          <div className="flex items-center gap-1">
                             <div 
-                              className="w-3 h-3 rounded" 
+                              className="w-2 h-2 rounded" 
                               style={{ backgroundColor: dept.color }}
                             ></div>
-                            <span className="text-sm text-foreground">{dept.name}</span>
+                            <span className="text-xs text-foreground">{dept.name}</span>
                           </div>
                         </td>
-                        <td className="p-3 text-right text-sm text-foreground">${dept.cost}</td>
+                        <td className="p-2 text-right text-xs text-foreground">${dept.cost}</td>
                       </tr>
                     ))}
                   </tbody>
