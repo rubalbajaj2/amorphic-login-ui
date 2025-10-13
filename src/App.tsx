@@ -9,6 +9,7 @@ import { NHSPage } from "./components/NHSPage";
 import { UnifiedPublicSafetyPage } from "./components/UnifiedPublicSafetyPage";
 import { LocalCouncilPage } from "./components/LocalCouncilPage";
 import { FraudAnalysisPage } from "./components/FraudAnalysisPage";
+import { AskMertiPage } from "./components/AskMertiPage";
 import { AdministrationPage } from "./components/AdministrationPage";
 import { CatalogPage } from "./components/CatalogPage";
 import { DatasetsPage } from "./components/DatasetsPage";
@@ -25,7 +26,7 @@ import { useToast } from "@/hooks/use-toast";
 
 const queryClient = new QueryClient();
 
-type PageType = 'dashboard' | 'nhs' | 'administration' | 'catalog' | 'datasets' | 'glossaries' | 'hcls' | 'shared-resources' | 'etl-jobs' | 'data-pipelines' | 'apps' | 'playground' | 'data-labs' | 'unified-public-safety' | 'local-council' | 'fraud-analysis' | 'ai-chatbot';
+type PageType = 'dashboard' | 'nhs' | 'administration' | 'catalog' | 'datasets' | 'glossaries' | 'hcls' | 'shared-resources' | 'etl-jobs' | 'data-pipelines' | 'apps' | 'playground' | 'data-labs' | 'unified-public-safety' | 'local-council' | 'fraud-analysis' | 'ai-chatbot' | 'ask-merti';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -76,6 +77,8 @@ const App = () => {
         return <LocalCouncilPage onLogout={handleLogout} onNavigate={handleNavigate} />;
       case 'fraud-analysis':
         return <FraudAnalysisPage onLogout={handleLogout} onNavigate={handleNavigate} />;
+      case 'ask-merti':
+        return <AskMertiPage onLogout={handleLogout} onNavigate={handleNavigate} />;
       case 'administration':
         return <AdministrationPage {...commonProps} />;
       case 'catalog':

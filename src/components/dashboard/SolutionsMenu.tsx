@@ -1,4 +1,4 @@
-import { Shield, ExternalLink, Building, AlertTriangle } from "lucide-react";
+import { Shield, ExternalLink, Building, AlertTriangle, MessageSquare } from "lucide-react";
 import { MenuCard } from "./MenuCard";
 
 interface SolutionsMenuProps {
@@ -31,6 +31,12 @@ export const SolutionsMenu = ({ onClose, onNavigate }: SolutionsMenuProps) => {
       title: "Fraud Analysis",
       description: "An interactive dashboard demonstrating a real-time fraud analysis",
       page: "fraud-analysis"
+    },
+    {
+      icon: MessageSquare,
+      title: "Ask Merti!",
+      description: "An Agentic AI chatbot assistant for Council that takes action on your requests",
+      page: "ask-merti"
     }
   ];
 
