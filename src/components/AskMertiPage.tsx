@@ -7,15 +7,16 @@ interface AskMertiPageProps {
 
 export const AskMertiPage = ({ onLogout, onNavigate }: AskMertiPageProps) => {
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="h-screen bg-background flex flex-col">
       <AppHeader onLogout={onLogout} onNavigate={onNavigate} />
       
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1 w-full">
         <iframe
           src="https://ask-merti.lovable.app/"
           className="w-full h-full border-0"
           title="Ask Merti"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
         />
       </div>
     </div>
